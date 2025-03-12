@@ -40,6 +40,12 @@ theorem induction_p3_minif2f_induction_ineq_nsqlefactn (n : ℕ) (h₀ : 4 ≤ n
     _ ≤ k.succ * k ! := by nlinarith
     _ = k.succ ! := by apply Nat.factorial_succ
 
+example (n : ℕ) (h₀ : 3 ≤ n) : n.succ ^ (n - 1) ≥ n ^ (n - 1) := by
+  -- Apply the lemma that if `a ≤ b`, then `a^k ≤ b^k` for non-negative `k`.
+  apply Nat.pow_le_pow_of_le_left
+  -- Prove that `n ≤ n.succ` (since `n.succ = n + 1`).
+  exact Nat.le_succ n
+
 theorem induction_p4_minif2f_induction_nfactltnexpnm1ngt3 (n : ℕ) (h₀ : 3 ≤ n) : n ! < n ^ (n - 1) := by
   induction' h₀ with k g IH
   · calc 3 ! = 6 := by simp [Nat.factorial_succ]
@@ -69,4 +75,33 @@ theorem induction_p4_minif2f_induction_nfactltnexpnm1ngt3 (n : ℕ) (h₀ : 3 �
 
 theorem induction_p5_minif2f_induction_pord1p1on2powklt5on2 (n : ℕ) (h₀ : 0 < n) : (∏ k in Finset.Icc 1 n, 1 + (1 : ℝ) / 2 ^ k) < 5 / 2 := by sorry
 
-theorem induction_p6_minif2f_induction_prod1p1onk3le3m1onn (n : ℕ) (h₀ : 0 < n) : (∏ k in Finset.Icc 1 n, 1 + (1 : ℝ) / k ^ 3) ≤ (3 : ℝ) - 1 / ↑n := by
+example (a b c d : ℝ) (hb : b ≠ 0) (hd : d ≠ 0) : (a / b) * (c / d) = (a * c) / (b * d) := by
+  -- Simplify the expression using field operations, ensuring no division by zero
+  field_simp [hb, hd]
+
+theorem induction_p6_minif2f_induction_prod1p1onk3le3m1onn (n : ℕ) (h₀ : 0 < n) : (∏ k in Finset.Icc 1 n, (1 + (1 : ℝ) / k ^ 3)) ≤ (3 : ℝ) - 1 / ↑n := by
+  induction' h₀ with m j IH
+  · calc ∏ k ∈ Finset.Icc 1 (succ 0), (1 + (1 : ℝ) / ↑k ^ 3) = 1 + (1 : ℝ) / 1 ^ 3 := by norm_cast; rw [Finset.Icc_self, Finset.prod_singleton]
+      _ = (2 : ℝ) := by norm_num
+      _ ≤ 3 - (1 : ℝ) / (succ 0) := by norm_num
+
+  have hsuccm: (succ m : ℝ) ^ 3 ≠ 0 := by norm_cast; simp
+  have hm: m ≠ 0 := by cases m with
+  | zero =>
+    -- Case 1: `m = 0` leads to a contradiction with `j : 0 ≥ 1`
+    contradiction
+  | succ m' =>
+    -- Case 2: `m = succ m'` (i.e., `m` is a successor), so `m ≠ 0` by definition
+    simp
+
+  have ineq_poly : ((succ m : ℝ) ^ 3 + (1 : ℝ)) * (3 * (m : ℝ) - 1) ≤ (3 * (succ m : ℝ) ^ 3 * (m : ℝ) - (succ m : ℝ) ^ 2 * m) := by
+    norm_cast
+    <;> ring
+    <;> ring_nf
+    <;> simp_all
+    <;> nlinarith [ sq_nonneg ( m - (1 : ℝ) / 2) ]
+
+
+  have ineq: (1 + (1 : ℝ) / (succ m) ^ 3) * (3 - (1 : ℝ) / m) ≤ (3 - (1 : ℝ) / (succ m)) := by
+    calc (1 + (1 : ℝ) / (succ m) ^ 3) * (3 - (1 : ℝ) / m) = ((succ m : ℝ) ^ 3 + (1 : ℝ)) * (3 * (m : ℝ) - 1) / ((succ m : ℝ) ^ 3 * m) := by field_simp
+      _ ≤ (3 * (succ m : ℝ) ^ 3 * (m : ℝ) - (succ m : ℝ) ^ 2 * m) / ((succ m : ℝ) ^ 3 * m) := by
