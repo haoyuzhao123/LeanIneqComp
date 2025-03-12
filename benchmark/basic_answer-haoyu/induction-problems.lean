@@ -40,12 +40,6 @@ theorem induction_p3_minif2f_induction_ineq_nsqlefactn (n : ℕ) (h₀ : 4 ≤ n
     _ ≤ k.succ * k ! := by nlinarith
     _ = k.succ ! := by apply Nat.factorial_succ
 
-example (n : ℕ) (h₀ : 3 ≤ n) : n.succ ^ (n - 1) ≥ n ^ (n - 1) := by
-  -- Apply the lemma that if `a ≤ b`, then `a^k ≤ b^k` for non-negative `k`.
-  apply Nat.pow_le_pow_of_le_left
-  -- Prove that `n ≤ n.succ` (since `n.succ = n + 1`).
-  exact Nat.le_succ n
-
 theorem induction_p4_minif2f_induction_nfactltnexpnm1ngt3 (n : ℕ) (h₀ : 3 ≤ n) : n ! < n ^ (n - 1) := by
   induction' h₀ with k g IH
   · calc 3 ! = 6 := by simp [Nat.factorial_succ]
