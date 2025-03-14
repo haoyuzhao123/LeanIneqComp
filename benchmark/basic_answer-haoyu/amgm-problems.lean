@@ -162,6 +162,11 @@ theorem amgm_p5 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y>
   have xyyzzonefifth: (x * y * y * z * z) ^ (5⁻¹: ℝ ) ≤ 2 := by linarith
   have xyyzzonefifth' : ((x * y * y * z * z) ^ (5⁻¹: ℝ )) ^ 5 ≤ 2 ^ 5 := by gcongr
 
+  calc x*y^2*z^2 = x * y * y * z * z := by ring
+    _ = ((x * y * y * z * z) ^ ((5:ℝ )⁻¹)) ^ 5 := by rw [← Real.rpow_natCast] ; simp [xyyzzpos.le]
+    _ ≤ 2 ^ 5 := xyyzzonefifth'
+    _ = 32 := by norm_num
+
 example (x : ℝ) (hx : x > 0) : (x ^ 4) ^ (4⁻¹: ℝ ) = x := by
   rw [← Real.rpow_natCast]
   simp [Real.rpow_mul, hx.le]
@@ -196,13 +201,25 @@ theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ)
   norm_num at amgm
   simp [Fin.prod_univ_three] at amgm
 
-  have x4nn : 0 ≤ x ^ 4 := by nlinarith [ sq_nonneg (x ^ 2)]
-  have y4nn : 0 ≤ y ^ 4 := by nlinarith [ sq_nonneg (y ^ 2)]
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x3p : 0 < x ^ 3 := by nlinarith
+  have x6p : 0 < x ^ 6 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y3p : 0 < y ^ 3 := by nlinarith
+
+  have xtrans : (x ^ 6) ^ (3⁻¹: ℝ ) = x ^ 2 := by
+    rw [← Real.rpow_natCast]
+    simp [Real.rpow_mul, h.1.le]
+
+  have ytrans : (y ^ 3 )^ (3⁻¹: ℝ ) = y := by
+    rw [← Real.rpow_natCast]
+    simp [Real.rpow_mul, h.2.le]
 
   calc 2 / 3 * x ^ 3 + 1 / 3 * y ^ 3 = ( x ^ 3 + x ^ 3 + y ^ 3 ) / 3 := by ring
     _ ≥ (x ^ 3 * x ^ 3 * y ^ 3 ) ^ (3⁻¹: ℝ ) := by apply amgm
-    _ = (x ^ 3 * (x ^ 3 * y ^ 3)) ^ (3⁻¹: ℝ ) := by ring
-    _ = (x ^ 4 ) ^ (4⁻¹: ℝ ) * (x ^ 4 * y ^ 4 * z ^ 4)^ (4⁻¹: ℝ ) := by sorry
+    _ = (x ^ 6 * y ^ 3) ^ (3⁻¹: ℝ ) := by ring
+    _ = (x ^ 6) ^ (3⁻¹: ℝ ) * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
+    _ = x ^ 2 * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [← Real.rpow_natCast] ; simp [Real.rpow_mul, h.1.le]
 
 theorem amgm_p7 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
   -- Step 1: Define the three numbers to apply AM-GM
