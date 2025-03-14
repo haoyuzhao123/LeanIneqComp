@@ -145,28 +145,61 @@ theorem cauchy_p4_hard2 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h 
   nlinarith
 
 
-theorem cauchy_p5_Serbia_2009 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x + y + z = z * y + y * x + x * z) : 1 / (x^2 + y + 1) + 1 / (y^2 + z + 1) + 1 / (z^2 + x + 1) ≤ 1 := by sorry
+theorem cauchy_p5 (a b c d : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hd : d > 0) (h : a + b + c + d = 1) : 1 / (b + c + d) + 1 / (c + d + a) + 1 / (a + b + d) + 1 / (a + b + c) ≥ 16 / 3 := by
+  have h1 : (3 * (a + b + c + d)) * (1 / (b + c + d) + 1 / (c + d + a) + 1 / (a + b + d) + 1 / (a + b + c)) ≥ 16 := by
+    convert_to (∑ i : Fin 4, (![√(b + c + d), √(c + d + a), √(a + b + d), √(a + b + c)] i)^2) *
+            (∑ i : Fin 4, (![√(1 / (b + c + d)), √(1 / (c + d + a)), √(1 / (a + b + d)), √(1 / (a + b + c))] i)^2) ≥
+            (∑ i : Fin 4, ![√(b + c + d), √(c + d + a), √(a + b + d), √(a + b + c)] i * ![√(1 / (b + c + d)), √(1 / (c + d + a)), √(1 / (a + b + d)), √(1 / (a + b + c))] i)^2
+    simp [Fin.sum_univ_four]
+    field_simp; left; ring
+    simp [Fin.sum_univ_four]
+    field_simp [mul_assoc, mul_comm, mul_left_comm]
+    norm_num
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  nlinarith
 
 
-theorem cauchy_p6_USAMO_1978 (a b c d e : ℝ) (h : a + b + c + d + e = 8) (g : a^2 + b^2 + c^2 + d^2 + e^2 = 16) : 0 ≤ e ∧ e ≤ 16 / 5 := by sorry
+theorem cauchy_p6 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : √(2 * a + 1) + √(2 * b + 1) + √(2 * c + 1) ≤ √15 := by
+  have h1 : 3 * (2 * (a + b + c) + 3) ≥ (√(2 * a + 1) + √(2 * b + 1) + √(2 * c + 1))^2 := by
+    convert_to (∑ i : Fin 3, (![1, 1, 1] i)^2) *
+            (∑ i : Fin 3, (![√(2 * a + 1), √(2 * b + 1), √(2 * c + 1)] i)^2) ≥
+            (∑ i : Fin 3, ![1, 1, 1] i * ![√(2 * a + 1), √(2 * b + 1), √(2 * c + 1)] i)^2
+    simp [Fin.sum_univ_three]
+    field_simp; ring
+    simp [Fin.sum_univ_three]
+    field_simp
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  rw [h] at h1
+  norm_num at h1
+  apply Real.sqrt_le_sqrt at h1
+  rw [Real.sqrt_sq (add_nonneg (add_nonneg (Real.sqrt_nonneg (2 * a + 1)) (Real.sqrt_nonneg (2 * b + 1))) (Real.sqrt_nonneg (2 * c + 1)))] at h1
+  exact h1
 
 
--- 需要 amgm
-theorem cauchy_p7 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x^2 + y^2 + z^2 = 1) : x / (1 - x^2) + y / (1 - y^2) + z / (1 - z^2) ≤ 3 * √3 / 2 := by sorry
-
-
--- 需要 Chebyshev (排序那个)
-theorem cauchy_p8 (a b c d : ℝ) (h : a * b + b * c + c * d + d * a = 1) : a^3 / (b + c + d) + b^3 / (c + d + a) + c^3 / (a + b + d) + d^3 / (a + b + c) ≥ 1 / 3 := by sorry
-
-
-theorem cauchy_p9 (a b c d : ℝ) (h : a + b + c + d = 1) : a / (b + c + d) + b / (c + d + a) + c / (a + b + d) + d / (a + b + c) ≥ 16 / 3 := by sorry
-
-
--- 这个会不会有点太难了？
-theorem cauchy_p10 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : √(a^2 + a*b + b^2) + √(b^2 + b*c + c^2) + √(c^2 + c*a + a^2) ≤ √(5 * (a^2 + b^2 + c^2) + 4 * (a*b + b*c + c*a)) := by sorry
-
-
-theorem cauchy_p11 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : √(2 * a + 1) + √(2 * b + 1) + √(2 * c + 1) ≤ √15 := by sorry
-
-
-theorem cauchy_p12 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : √(2 * a + 1) + √(2 * b + 1) + √(3 * c + 1) ≤ 7 * √3 / 3 := by sorry
+theorem cauchy_p7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : √(2 * a + 1) + √(2 * b + 1) + √(3 * c + 1) ≤ 7 * √3 / 3 := by
+  have h1 : 7 / 2 * (2 * (a + b + c) + 8 / 3) ≥ (√(2 * a + 1) + √(2 * b + 1) + √(3 * c + 1))^2 := by
+    convert_to (∑ i : Fin 3, (![1, 1, √(3 / 2)] i)^2) *
+            (∑ i : Fin 3, (![√(2 * a + 1), √(2 * b + 1), √(2 * c + 2 / 3)] i)^2) ≥
+            (∑ i : Fin 3, ![1, 1, √(3 / 2)] i * ![√(2 * a + 1), √(2 * b + 1), √(2 * c + 2 / 3)] i)^2
+    simp [Fin.sum_univ_three]
+    field_simp; ring
+    simp [Fin.sum_univ_three]
+    have g : √(3 * c + 1) = √3 / √2 * √(2 * c + 2 / 3) := by
+      field_simp
+      rw [← sqrt_mul] <;> ring_nf <;> norm_num
+      rw [← sqrt_mul] <;> ring_nf
+      rw [← sqrt_mul] <;> ring_nf
+      norm_num
+      linarith
+    rw [g]
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  rw [h] at h1
+  norm_num at h1
+  apply Real.sqrt_le_sqrt at h1
+  rw [Real.sqrt_sq (add_nonneg (add_nonneg (Real.sqrt_nonneg (2 * a + 1)) (Real.sqrt_nonneg (2 * b + 1))) (Real.sqrt_nonneg (3 * c + 1)))] at h1
+  have g0 : √(49 / 3) = 7 * √3 / 3 := by
+    field_simp
+    simp [mul_assoc, Real.mul_self_sqrt]
+    norm_num
+  rw [← g0]
+  exact h1
