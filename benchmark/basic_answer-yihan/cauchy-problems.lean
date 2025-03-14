@@ -203,3 +203,27 @@ theorem cauchy_p7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + 
     norm_num
   rw [← g0]
   exact h1
+
+
+-- 用了另一个形式
+theorem cauchy_p8 (n : ℕ) (a b : Fin n → ℝ) (hn : n > 0) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / b i ≥ (∑ i, a i)^2 / ∑ i, a i * b i := by
+  convert_to ∑ i, (a i)^2 / (a i * b i) ≥ (∑ i, a i)^2 / ∑ i, a i * b i
+  congr with i
+  simp [sq, div_eq_mul_inv, mul_assoc, mul_comm, ← mul_assoc]
+  apply Finset.sq_sum_div_le_sum_sq_div
+  congr! with i
+  apply mul_pos (ha i) (hb i)
+
+
+theorem cauchy_p9 (n : ℕ) (a b : Fin n → ℝ) (hn : n > 0) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / (b i)^2 ≥ (∑ i, a i / b i)^2 / ∑ i, a i := by
+  convert_to ∑ i, (a i / b i)^2 / a i ≥ (∑ i, a i / b i)^2 / ∑ i, a i
+  congr with i
+  field_simp; rw [eq_comm]
+  calc
+    a i ^ 2 / (b i ^ 2 * a i) = a i ^ 2 / (a i * b i ^ 2) := by rw [mul_comm]
+    _ = a i * a i / (a i * b i ^ 2) := by rw [pow_two]
+    _ = a i * a i / a i / b i ^ 2  := by rw [div_div]
+    _ = a i / b i ^ 2 := by rw [← mul_div, mul_div_cancel₀]; exact ne_of_gt (ha i)
+  apply Finset.sq_sum_div_le_sum_sq_div
+  congr! with i
+  exact ha i

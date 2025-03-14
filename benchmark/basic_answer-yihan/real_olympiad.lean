@@ -8,6 +8,7 @@ open BigOperators Real Nat Topology Rat
 
 theorem cauchy_p5_Serbia_2009 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x + y + z = z * y + y * x + x * z) : 1 / (x^2 + y + 1) + 1 / (y^2 + z + 1) + 1 / (z^2 + x + 1) ≤ 1 := by sorry
 
+theorem cauchy_p6_USAMO_1978 (a b c d e : ℝ) (h : a + b + c + d + e = 8) (g : a^2 + b^2 + c^2 + d^2 + e^2 = 16) : 0 ≤ e ∧ e ≤ 16 / 5 := by sorry
 
 -- 需要 amgm
 theorem cauchy_p7 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x^2 + y^2 + z^2 = 1) : x / (1 - x^2) + y / (1 - y^2) + z / (1 - z^2) ≤ 3 * √3 / 2 := by sorry
@@ -19,3 +20,6 @@ theorem cauchy_p8 (a b c d : ℝ) (h : a * b + b * c + c * d + d * a = 1) : a^3 
 
 -- 这个会不会有点太难了？
 theorem cauchy_p10 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : √(a^2 + a*b + b^2) + √(b^2 + b*c + c^2) + √(c^2 + c*a + a^2) ≤ √(5 * (a^2 + b^2 + c^2) + 4 * (a*b + b*c + c*a)) := by sorry
+
+
+theorem cauchy_JMO_2012 (a b c : ℝ) : (a^3 + 5 * b^3) / (3 * a + b) + (b^3 + 5 * c^3) / (3 * b + c) + (c^3 + 5 * a^3) / (3 * c + a) ≥ 3 / 2 * (a^2 + b^2 + c^2) := by sorry
