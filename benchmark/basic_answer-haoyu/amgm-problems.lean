@@ -167,14 +167,6 @@ theorem amgm_p5 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y>
     _ ≤ 2 ^ 5 := xyyzzonefifth'
     _ = 32 := by norm_num
 
-example (x : ℝ) (hx : x > 0) : (x ^ 4) ^ (4⁻¹: ℝ ) = x := by
-  rw [← Real.rpow_natCast]
-  simp [Real.rpow_mul, hx.le]
-
-example (x y : ℝ) (hx : 0 < x) (hy : 0 < y) : (x * y) ^ (1/4 : ℝ) = x ^ (1/4 : ℝ) * y ^ (1/4 : ℝ) := by
-  -- Apply the lemma `mul_rpow` to split the exponent over the multiplication.
-  rw [mul_rpow (by positivity) (by positivity)]
-
 theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x^3, x^3, y^3]
@@ -220,8 +212,7 @@ theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ)
     _ ≥ (x ^ 3 * x ^ 3 * y ^ 3 ) ^ (3⁻¹: ℝ ) := by apply amgm
     _ = (x ^ 6 * y ^ 3) ^ (3⁻¹: ℝ ) := by ring
     _ = (x ^ 6) ^ (3⁻¹: ℝ ) * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
-    _ = x ^ 2 * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [ xtrans ]
-    _ = x ^ 2 * y := by rw [ytrans]
+    _ = x ^ 2 * y := by rw [xtrans, ytrans]
 
 theorem amgm_p7 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
   -- Step 1: Define the three numbers to apply AM-GM
@@ -249,11 +240,30 @@ theorem amgm_p7 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 
   norm_num at amgm
   simp [Fin.prod_univ_four] at amgm
 
-  have x4nn : 0 ≤ x ^ 4 := by nlinarith [ sq_nonneg (x ^ 2)]
-  have y4nn : 0 ≤ y ^ 4 := by nlinarith [ sq_nonneg (y ^ 2)]
-  have z4nn : 0 ≤ z ^ 4 := by nlinarith [ sq_nonneg (z ^ 2)]
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x4p : 0 < x ^ 4 := by nlinarith
+  have x8p : 0 < x ^ 8 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y4p : 0 < y ^ 4 := by nlinarith
+  have z2p : 0 < z ^ 2 := by nlinarith
+  have z4p : 0 < z ^ 4 := by nlinarith
+
+  have xtrans : (x ^ 8) ^ (4⁻¹: ℝ ) = x ^ 2 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt h.1) ]
+    norm_num
+
+  have ytrans : (y ^ 4 )^ (4⁻¹: ℝ ) = y := by
+    rw [← Real.rpow_natCast]
+    simp [Real.rpow_mul, h.2.1.le]
+
+  have ztrans : (z ^ 4 )^ (4⁻¹: ℝ ) = z := by
+    rw [← Real.rpow_natCast]
+    simp [Real.rpow_mul, h.2.2.le]
 
   calc 1 / 2 * x ^ 4 + 1 / 4 * y ^ 4 + 1 / 4 * z ^ 4 = ( x ^ 4 + x ^ 4 + y ^ 4 + z ^ 4) / 4 := by ring
     _ ≥ (x ^ 4 * x ^ 4 * y ^ 4 * z ^ 4) ^ (4⁻¹: ℝ ) := by apply amgm
-    _ = (x ^ 4 * (x ^ 4 * y ^ 4 * z ^ 4)) ^ (4⁻¹: ℝ ) := by ring
-    _ = (x ^ 4 ) ^ (4⁻¹: ℝ ) * (x ^ 4 * y ^ 4 * z ^ 4)^ (4⁻¹: ℝ ) := by sorry
+    _ = (x ^ 8 * y ^ 4 * z ^ 4) ^ (4⁻¹: ℝ ) := by ring
+    _ = (x ^ 8 * y ^ 4) ^ (4⁻¹: ℝ ) * (z ^ 4) ^ (4⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
+    _ = (x ^ 8 )^ (4⁻¹: ℝ ) * (y ^ 4) ^ (4⁻¹: ℝ ) * (z ^ 4) ^ (4⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
+    _ = x ^ 2 * y * z := by rw [xtrans, ytrans, ztrans]
