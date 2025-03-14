@@ -209,7 +209,8 @@ theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ)
 
   have xtrans : (x ^ 6) ^ (3⁻¹: ℝ ) = x ^ 2 := by
     rw [← Real.rpow_natCast]
-    simp [Real.rpow_mul, h.1.le]
+    rw [← Real.rpow_mul (le_of_lt h.1) ]
+    norm_num
 
   have ytrans : (y ^ 3 )^ (3⁻¹: ℝ ) = y := by
     rw [← Real.rpow_natCast]
@@ -219,7 +220,8 @@ theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ)
     _ ≥ (x ^ 3 * x ^ 3 * y ^ 3 ) ^ (3⁻¹: ℝ ) := by apply amgm
     _ = (x ^ 6 * y ^ 3) ^ (3⁻¹: ℝ ) := by ring
     _ = (x ^ 6) ^ (3⁻¹: ℝ ) * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
-    _ = x ^ 2 * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [← Real.rpow_natCast] ; simp [Real.rpow_mul, h.1.le]
+    _ = x ^ 2 * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [ xtrans ]
+    _ = x ^ 2 * y := by rw [ytrans]
 
 theorem amgm_p7 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
   -- Step 1: Define the three numbers to apply AM-GM
