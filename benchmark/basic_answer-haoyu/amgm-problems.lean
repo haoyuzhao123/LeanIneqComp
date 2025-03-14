@@ -162,7 +162,79 @@ theorem amgm_p5 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y>
   have xyyzzonefifth: (x * y * y * z * z) ^ (5⁻¹: ℝ ) ≤ 2 := by linarith
   have xyyzzonefifth' : ((x * y * y * z * z) ^ (5⁻¹: ℝ )) ^ 5 ≤ 2 ^ 5 := by gcongr
 
-  calc x * y ^ 2 * z ^ 2 = x * y * y * z * z := by ring
-    _ = ((x * y * y * z * z) ^ ((5:ℝ )⁻¹)) ^ 5 := by rw [← Real.rpow_natCast] ; simp [xyyzzpos.le]
-    _ ≤ 2 ^ 5 := xyyzzonefifth'
-    _ = 32 := by norm_num
+example (x : ℝ) (hx : x > 0) : (x ^ 4) ^ (4⁻¹: ℝ ) = x := by
+  rw [← Real.rpow_natCast]
+  simp [Real.rpow_mul, hx.le]
+
+example (x y : ℝ) (hx : 0 < x) (hy : 0 < y) : (x * y) ^ (1/4 : ℝ) = x ^ (1/4 : ℝ) * y ^ (1/4 : ℝ) := by
+  -- Apply the lemma `mul_rpow` to split the exponent over the multiplication.
+  rw [mul_rpow (by positivity) (by positivity)]
+
+theorem amgm_p6 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^3, x^3, y^3]
+  let w := ![1, 1, 1]
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        nlinarith [ sq_nonneg (x ^ 2), sq_nonneg (y ^ 2)]
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 3, S i ^ (w i : ℝ)) ^ ((∑ i : Fin 3, (w i : ℝ))⁻¹) ≤ (∑ i : Fin 3, (w i : ℝ) * S i) / (∑ i: Fin 3, (w i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    field_simp
+    simp [Fin.sum_univ_three, w]
+    norm_num
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [w] at amgm
+  simp [Fin.sum_univ_three] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_three] at amgm
+
+  have x4nn : 0 ≤ x ^ 4 := by nlinarith [ sq_nonneg (x ^ 2)]
+  have y4nn : 0 ≤ y ^ 4 := by nlinarith [ sq_nonneg (y ^ 2)]
+
+  calc 2 / 3 * x ^ 3 + 1 / 3 * y ^ 3 = ( x ^ 3 + x ^ 3 + y ^ 3 ) / 3 := by ring
+    _ ≥ (x ^ 3 * x ^ 3 * y ^ 3 ) ^ (3⁻¹: ℝ ) := by apply amgm
+    _ = (x ^ 3 * (x ^ 3 * y ^ 3)) ^ (3⁻¹: ℝ ) := by ring
+    _ = (x ^ 4 ) ^ (4⁻¹: ℝ ) * (x ^ 4 * y ^ 4 * z ^ 4)^ (4⁻¹: ℝ ) := by sorry
+
+theorem amgm_p7 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^4, x^4, y^4, z^4]
+  let w := ![1, 1, 1, 1]
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith [ sq_nonneg (x ^ 2), sq_nonneg (y ^ 2), sq_nonneg (z ^ 2)]
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 4, S i ^ (w i : ℝ)) ^ ((∑ i : Fin 4, (w i : ℝ))⁻¹) ≤ (∑ i : Fin 4, (w i : ℝ) * S i) / (∑ i: Fin 4, (w i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    field_simp
+    simp [Fin.sum_univ_four, w]
+    norm_num
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [w] at amgm
+  simp [Fin.sum_univ_four] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_four] at amgm
+
+  have x4nn : 0 ≤ x ^ 4 := by nlinarith [ sq_nonneg (x ^ 2)]
+  have y4nn : 0 ≤ y ^ 4 := by nlinarith [ sq_nonneg (y ^ 2)]
+  have z4nn : 0 ≤ z ^ 4 := by nlinarith [ sq_nonneg (z ^ 2)]
+
+  calc 1 / 2 * x ^ 4 + 1 / 4 * y ^ 4 + 1 / 4 * z ^ 4 = ( x ^ 4 + x ^ 4 + y ^ 4 + z ^ 4) / 4 := by ring
+    _ ≥ (x ^ 4 * x ^ 4 * y ^ 4 * z ^ 4) ^ (4⁻¹: ℝ ) := by apply amgm
+    _ = (x ^ 4 * (x ^ 4 * y ^ 4 * z ^ 4)) ^ (4⁻¹: ℝ ) := by ring
+    _ = (x ^ 4 ) ^ (4⁻¹: ℝ ) * (x ^ 4 * y ^ 4 * z ^ 4)^ (4⁻¹: ℝ ) := by sorry

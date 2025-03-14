@@ -115,3 +115,38 @@ theorem induction_p6_minif2f_induction_prod1p1onk3le3m1onn (n : ℕ) (h₀ : 0 <
   calc ∏ k ∈ Finset.Icc 1 m.succ, (1 + 1 / ↑k ^ 3) = (∏ k ∈ Finset.Icc 1 m, (1 + 1 / ↑k ^ 3)) * (1 + (1 : ℝ) / (m.succ : ℝ) ^ 3) := by apply Finset.prod_Ioc_succ_top hmnn
     _ ≤ (3 - (1 : ℝ) / m) * (1 + (1 : ℝ) / (m.succ : ℝ) ^ 3) := by nlinarith
     _ ≤ (3 - (1 : ℝ) / (succ m)) := by nlinarith
+
+example : (1 : ℝ) / Real.sqrt (2 : ℝ) ≤ (2 : ℝ) * ( Real.sqrt (2 : ℝ) - (1 : ℝ)) := by norm_num
+
+example (j : ℕ) (h : j ≥ 2) : ∑ k in Finset.Icc 2 j.succ, (1 : ℝ) / Real.sqrt k = (∑ k in Finset.Icc 2 j, (1 : ℝ) / Real.sqrt k) + (1 : ℝ) / Real.sqrt (j.succ : ℝ) := by
+  -- Split the interval 2 to j+1 into 2 to j and the singleton {j+1}
+  rw [Finset.sum_Icc_succ_top]
+  -- Use the property of sums over disjoint sets to split the sum
+  linarith
+
+theorem induction_p7_minif2f_algebra_sum1onsqrt2to1onsqrt10000lt198 : (∑ k in Finset.Icc (2 : ℕ) 10000, 1 / Real.sqrt k) < 198 := by
+  -- First show that 1 / √n ≤ 2(√n - √n-1)
+  -- The solution is obtained by Goedel Prover, STP will also generate these answer which are not readable by human
+  have sqrtlemma (m : ℕ) (h: m ≥ 1) : 1 / Real.sqrt m ≤ 2 * (Real.sqrt m - Real.sqrt (m-1)) := by
+    cases m with
+    | zero =>
+      simp_all [Nat.succ_le_iff]
+    | succ m =>
+      field_simp [Real.sqrt_eq_iff_mul_self_eq]
+      rw [div_le_iff₀] <;> norm_num <;>
+      nlinarith [Real.sqrt_nonneg m, Real.sqrt_nonneg (m + 1), sq_sqrt (by linarith : 0 ≤ (m : ℝ)),
+        sq_sqrt (by linarith : 0 ≤ (m + 1 : ℝ))]
+
+  have inductionthm (n : ℕ) (hn : n ≥ 2) : (∑ k in Finset.Icc (2 : ℕ) n, (1 : ℝ) / Real.sqrt k) ≤  2 * (Real.sqrt n - 1) := by
+    induction' hn with j hj IH
+    · calc ∑ k in Finset.Icc (2 : ℕ) 2, ((1 : ℝ) / Real.sqrt k) = (1 : ℝ) / Real.sqrt (2 : ℝ) := by norm_cast; rw [Finset.Icc_self, Finset.sum_singleton] ; norm_num
+        _ ≤ 2 * (Real.sqrt 2 - 1) := by sorry
+
+    have hjg2 : 2 ≤ j.succ := by sorry
+    have hjg1 : j.succ ≥ 1 := by norm_num
+
+    have IS : 2 * (√j - 1) + (1 : ℝ) / Real.sqrt (succ j : ℝ) ≤ 2 * (√j - 1) + 2 * (Real.sqrt (j+1 : ℝ) - Real.sqrt j) := by norm_cast ; simp_all ; apply sqrtlemma (j + 1)
+
+    calc ∑ k ∈ Finset.Icc 2 j.succ, (1 : ℝ) / Real.sqrt k = (∑ k ∈ Finset.Icc 2 j, (1 : ℝ) / Real.sqrt k) + (1 : ℝ) / Real.sqrt (succ j : ℝ) := by rw [Finset.sum_Icc_succ_top hjg2]
+      _ ≤ 2 * (√j - 1) + (1 : ℝ) / Real.sqrt (succ j : ℝ) := by nlinarith
+      _ ≤ 2 * (√j - 1) + 2 * (Real.sqrt (j+1) - Real.sqrt j) := by norm_cast; simp_all ; nlinarith
