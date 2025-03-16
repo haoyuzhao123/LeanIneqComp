@@ -206,7 +206,7 @@ theorem cauchy_p7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + 
 
 
 -- 用了另一个形式
-theorem cauchy_p8 (n : ℕ) (a b : Fin n → ℝ) (hn : n > 0) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / b i ≥ (∑ i, a i)^2 / ∑ i, a i * b i := by
+theorem cauchy_p8 (n : ℕ) (a b : Fin n → ℝ) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / b i ≥ (∑ i, a i)^2 / ∑ i, a i * b i := by
   convert_to ∑ i, (a i)^2 / (a i * b i) ≥ (∑ i, a i)^2 / ∑ i, a i * b i
   congr with i
   simp [sq, div_eq_mul_inv, mul_assoc, mul_comm, ← mul_assoc]
@@ -215,7 +215,7 @@ theorem cauchy_p8 (n : ℕ) (a b : Fin n → ℝ) (hn : n > 0) (ha : ∀ i, a i 
   apply mul_pos (ha i) (hb i)
 
 
-theorem cauchy_p9 (n : ℕ) (a b : Fin n → ℝ) (hn : n > 0) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / (b i)^2 ≥ (∑ i, a i / b i)^2 / ∑ i, a i := by
+theorem cauchy_p9 (n : ℕ) (a b : Fin n → ℝ) (ha : ∀ i, a i > 0) (hb : ∀ i, b i > 0) : ∑ i, a i / (b i)^2 ≥ (∑ i, a i / b i)^2 / ∑ i, a i := by
   convert_to ∑ i, (a i / b i)^2 / a i ≥ (∑ i, a i / b i)^2 / ∑ i, a i
   congr with i
   field_simp; rw [eq_comm]
@@ -278,11 +278,96 @@ theorem cauchy_p10_book_172 (n : ℕ) (x : Fin n → ℝ) (s : ℝ) (hn : n > 2)
       s / (↑n - 2) * ((↑n - 2) * s) = s * ((↑n - 2) / (↑n - 2)) * s := by ring
       _ = s * 1 * s := by
         rw [div_self]
-        -- 需要证 ↑n - 2 ≠ 0
-        sorry
-
+        have hn_real : (n : ℝ) - 2 > 0 := by
+          have hn_real : (n : ℝ) > 2 := by exact_mod_cast hn
+          linarith
+        exact ne_of_gt hn_real
       _ = s * s := by ring
       _ = s^2 := by ring
 
   rw [h_simplify]
   exact h1
+
+
+-- 一些基础的 cauchy 不等式
+theorem cauchy_p11 (x y z: ℝ) (h : x > 0 ∧ y > 0 ∧ z > 0) (g : x + y + z = 3) : 4 / x + 1 / y + 9 / z ≥ 12 := by
+  have hx : x > 0 := h.1
+  have hy : y > 0 := h.2.1
+  have hz : z > 0 := h.2.2
+  have h1 : (x + y + z) * (4 / x + 1 / y + 9 / z) ≥ 36 := by
+    convert_to (∑ i : Fin 3, (![√(x), √(y), √(z)] i)^2) *
+            (∑ i : Fin 3, (![√(4 / x), √(1 / y), √(9 / z)] i)^2) ≥
+            (∑ i : Fin 3, ![√(x), √(y), √(z)] i * ![√(4 / x), √(1 / y), √(9 / z)] i)^2
+    simp [Fin.sum_univ_three]
+    field_simp
+    simp [Fin.sum_univ_three]
+    field_simp
+    norm_num
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  nlinarith
+
+
+theorem cauchy_p12 (x y: ℝ) (hx : x > 0) (hy : y > 0) (g : 1 / (2 * x + y) + 3 / (x + y) = 2) : 6 * x + 5 * y ≥ 13 / 2 + 2 * √3 := by
+  have h1 : (1 / (2 * x + y) + 3 / (x + y)) * (6 * x + 5 * y) ≥ 13 + 4 * √3 := by
+    convert_to (∑ i : Fin 2, (![√(1 / (2 * x + y)), √(3 / (x + y))] i)^2) *
+            (∑ i : Fin 2, (![√(2 * x + y), √(4 * x + 4 * y)] i)^2) ≥
+            (∑ i : Fin 2, ![√(1 / (2 * x + y)), √(3 / (x + y))] i * ![√(2 * x + y), √(4 * x + 4 * y)] i)^2
+    simp [Fin.sum_univ_three]
+    field_simp; left; ring
+    simp [Fin.sum_univ_three]
+    have h_sq : √(4 * x + 4 * y) = 2 * √(x + y) := by
+      calc √(4 * x + 4 * y) = Real.sqrt (4 * (x + y)) := by rw [mul_add]
+      _ = Real.sqrt 4 * Real.sqrt (x + y) := by rw [Real.sqrt_mul (by linarith)]
+      _ = 2 * Real.sqrt (x + y) := by ring
+    field_simp [h_sq]
+    ring_nf
+    field_simp
+    ring
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  nlinarith
+
+
+theorem cauchy_p13 (x y: ℝ) (hx : x ≥ 0) (hy : y ≥ 0) (hxy : x + y ≤ 1) : 4 * x^2 + 4 * y^2 + (1 - x - y)^2 ≥ 2 / 3 := by
+  have h1 : (4 * x^2 + 4 * y^2 + (1 - x - y)^2) * (1 / 4 + 1 / 4 + 1) ≥ 1 := by
+    convert_to (∑ i : Fin 3, (![2 * x, 2 * y, 1 - x - y] i)^2) *
+            (∑ i : Fin 3, (![1 / 2, 1 / 2, 1] i)^2) ≥
+            (∑ i : Fin 3, ![2 * x, 2 * y, 1 - x - y] i * ![1 / 2, 1 / 2, 1] i)^2
+    simp [Fin.sum_univ_three]
+    ring
+    simp [Fin.sum_univ_three]
+    ring
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+  nlinarith
+
+
+theorem cauchy_p14 (x y z: ℝ) (h : x^2 + 2 * y^2 + 4 * z^2 > 0) : (x + y + z) / √(x^2 + 2 * y^2 + 4 * z^2) ≤ √7 / 2 := by
+  have h1 : (x^2 + 2 * y^2 + 4 * z^2) * (1 + 1/2 + 1/4) ≥ (x + y + z)^2 := by
+    convert_to (∑ i : Fin 3, (![x^2, 2 * y^2, 4 * z^2] i)) *
+            (∑ i : Fin 3, (![1, 1/2, 1/4] i)) ≥
+            (∑ i : Fin 3, ![x, y, z] i)^2
+    simp [Fin.sum_univ_three]
+    simp [Fin.sum_univ_three]
+    apply Finset.sum_sq_le_sum_mul_sum_of_sq_eq_mul
+    intro i _
+    fin_cases i <;> simp [sq_nonneg]
+    intro i _
+    fin_cases i <;> norm_num
+    intro i _
+    fin_cases i <;> field_simp
+  norm_num at h1
+  have h_frac : (x + y + z)^2 / (x^2 + 2 * y^2 + 4 * z^2) ≤ 7 / 4 := by
+    rw [mul_comm] at h1
+    rw [div_le_iff₀]
+    exact h1
+    exact h
+  apply Real.sqrt_le_sqrt at h_frac
+  rw [sqrt_div] at h_frac
+  have h_sq : (x + y + z) ≤ √((x + y + z) ^ 2) := by
+    apply Real.le_sqrt_of_sq_le
+    linarith
+  have h_xyz : (x + y + z) / √(x ^ 2 + 2 * y ^ 2 + 4 * z ^ 2) ≤ √(7 / 4) := by
+    apply le_trans _ h_frac
+    apply div_le_div_of_nonneg_right h_sq (sqrt_nonneg _)
+  have h_norm : √(7 / 4) = √7 / 2 := by norm_num
+  linarith
+  exact sq_nonneg _
