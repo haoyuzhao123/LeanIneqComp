@@ -13,8 +13,9 @@ Here we summarize some type of the problems in the benchmark
 + sum of square:
 + AM-GM:
 + Cauchy-Schwatz:
++ Induction: (ineq on natural number, ineq for series / finite sum / finite product etc)
 + Derivative: i feel like it is very important
-+ Lagrange mean value: this is also important for some inequalities related to integral (e.g., estimate sum 1/sqrt{n} or sum 1/n or sum a_i / sum_{j\le i}a_j)
++ Integral method: this is also important for some inequalities related to integral (e.g., estimate sum 1/sqrt{n} or sum 1/n or sum a_i / sum_{j\le i}a_j)
 
 After we have some problems for each category, we can then work on perturbing the problems, which includes but not limited to:
 + add more variable
