@@ -89,7 +89,80 @@ theorem amgm_p3 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 
 
   linarith
 
-theorem amgm_p4 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (2:ℝ)/5 * x + (2:ℝ)/5 * y + (1:ℝ)/5 * z ≥ x ^ ((2:ℝ)/5) * y ^ ((2:ℝ)/5) * z ^ ((1:ℝ)/5) := by
+theorem amgm_p4 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x + (1:ℝ) / 3 * y  ≥ x^((2:ℝ) / 3) * y^((1:ℝ) / 3) := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x, y]
+  let l := ![(2:ℝ) / 3, (1:ℝ) / 3]
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 2, l i := by
+      simp [l]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    exact l_nonneg
+    exact l_sump
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_two] at amgm
+
+  nlinarith
+
+theorem amgm_p5 (x y: ℝ )  (h : x > 0 ∧ y> 0): (4:ℝ) / 7 * x + (3:ℝ) / 7 * y  ≥ x^((4:ℝ) / 7) * y^((3:ℝ) / 7) := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x, y]
+  let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 2, l i := by
+      simp [l]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    exact l_nonneg
+    exact l_sump
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  norm_num at amgm
+
+  nlinarith
+
+theorem amgm_p6 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (2:ℝ)/5 * x + (2:ℝ)/5 * y + (1:ℝ)/5 * z ≥ x ^ ((2:ℝ)/5) * y ^ ((2:ℝ)/5) * z ^ ((1:ℝ)/5) := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, z]
   let l := ![(2:ℝ)/5, (2:ℝ)/5, (1:ℝ)/5]
@@ -128,7 +201,7 @@ theorem amgm_p4 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (2:ℝ)/5 
 
   linarith
 
-theorem amgm_p5 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 0) : (1:ℝ)/3 * x + (1:ℝ)/3 * y + (1:ℝ)/6 * z + (1:ℝ)/6 * w ≥ x ^ ((1:ℝ)/3) * y ^ ((1:ℝ)/3) * z ^ ((1:ℝ)/6) * w ^ ((1:ℝ)/6) := by
+theorem amgm_p7 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 0) : (1:ℝ)/3 * x + (1:ℝ)/3 * y + (1:ℝ)/6 * z + (1:ℝ)/6 * w ≥ x ^ ((1:ℝ)/3) * y ^ ((1:ℝ)/3) * z ^ ((1:ℝ)/6) * w ^ ((1:ℝ)/6) := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, z, w]
   let l := ![(1:ℝ)/3, (1:ℝ)/3, (1:ℝ)/6, (1:ℝ)/6]
@@ -168,7 +241,7 @@ theorem amgm_p5 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 
   linarith
 
 
-theorem amgm_p6 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): (x * y * z) ^ (3⁻¹: ℝ ) ≤ 1 := by
+theorem amgm_p8 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): (x * y * z) ^ (3⁻¹: ℝ ) ≤ 1 := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, z]
   let w := ![1, 1, 1]
@@ -196,7 +269,7 @@ theorem amgm_p6 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z>
 
   linarith
 
-theorem amgm_p7 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): (x * y ^ 2) ^ (3⁻¹: ℝ ) ≤ 1 := by
+theorem amgm_p9 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): (x * y ^ 2) ^ (3⁻¹: ℝ ) ≤ 1 := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, y]
   let w := ![1, 1, 1]
@@ -225,7 +298,7 @@ theorem amgm_p7 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): (x * y
   have h : (x * y * y) ^ (3⁻¹: ℝ ) = (x * y ^ 2) ^ (3⁻¹: ℝ ) := by ring
   linarith
 
-theorem amgm_p8 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): x * y ^ 2 ≤ 1 := by
+theorem amgm_p10 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): x * y ^ 2 ≤ 1 := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, y]
   let w := ![1, 1, 1]
@@ -262,7 +335,7 @@ theorem amgm_p8 (x y: ℝ ) (h₁: x+ 2 * y = 3) (h₂ : x > 0 ∧ y> 0): x * y 
 
 
 
-theorem amgm_p9 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): x * y * z ≤ 1 := by
+theorem amgm_p11 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): x * y * z ≤ 1 := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, z]
   let w := ![1, 1, 1]
@@ -296,7 +369,7 @@ theorem amgm_p9 (x y z: ℝ ) (h₁: x+ y + z = 3) (h₂ : x > 0 ∧ y> 0 ∧ z>
     _ ≤ 1 ^ 3 := xyzonethird'
     _ = 1 := by norm_num
 
-theorem amgm_p10 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): x * y ^ 2 * z ^ 2 ≤ 32 := by
+theorem amgm_p12 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y> 0 ∧ z> 0): x * y ^ 2 * z ^ 2 ≤ 32 := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x, y, y, z, z]
   let w := ![1, 1, 1, 1, 1]
@@ -331,7 +404,118 @@ theorem amgm_p10 (x y z: ℝ ) (h₁: x+ 2 * y + 2 * z = 10) (h₂ : x > 0 ∧ y
     _ ≤ 2 ^ 5 := xyyzzonefifth'
     _ = 32 := by norm_num
 
-theorem amgm_p11 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
+theorem amgm_p13 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^3, y^3]
+  let l := ![(2:ℝ) / 3, (1:ℝ) / 3]
+
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x3p : 0 < x ^ 3 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y3p : 0 < y ^ 3 := by nlinarith
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 2, l i := by
+      simp [l]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    exact l_nonneg
+    exact l_sump
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_two] at amgm
+
+  have xtrans : (x ^ 3) ^ ((2:ℝ)/3) = x ^ 2 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt h.1) ]
+    norm_num
+
+  have ytrans : (y ^ 3 )^ (3⁻¹: ℝ ) = y := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt h.2) ]
+    norm_num
+
+  calc (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3 ≥ (x ^ 3) ^ ((2:ℝ)/3) * (y ^ 3 )^ (3⁻¹: ℝ ) := by nlinarith
+    _ = x ^ 2 * y := by nlinarith
+
+theorem amgm_p14 (x y: ℝ )  (h : x > 0 ∧ y> 0): (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7  ≥ x^4 * y^3 := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^7, y^7]
+  let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
+
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x4p : 0 < x ^ 4 := by nlinarith
+  have x6p : 0 < x ^ 6 := by nlinarith
+  have x7p : 0 < x ^ 7 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y4p : 0 < y ^ 4 := by nlinarith
+  have y6p : 0 < y ^ 6 := by nlinarith
+  have y7p : 0 < y ^ 7 := by nlinarith
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 2, l i := by
+      simp [l]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+    apply Real.geom_mean_le_arith_mean
+    exact l_nonneg
+    exact l_sump
+    exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  norm_num at amgm
+
+  have xtrans : (x ^ 7) ^ ((4:ℝ)/7) = x ^ 4 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt h.1) ]
+    norm_num
+    norm_cast
+
+  have ytrans : (y ^ 7 )^ ((3:ℝ)/7) = y ^ 3 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt h.2) ]
+    norm_num
+    norm_cast
+
+  calc (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7 ≥ (x ^ 7) ^ ((4:ℝ)/7) * (y ^ 7 )^ ((3:ℝ)/7) := by nlinarith
+    _ = x ^ 4 * y ^ 3 := by rw [xtrans, ytrans]
+
+theorem amgm_p16 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x^3, x^3, y^3]
   let w := ![1, 1, 1]
@@ -378,7 +562,7 @@ theorem amgm_p11 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ
     _ = (x ^ 6) ^ (3⁻¹: ℝ ) * (y ^ 3 )^ (3⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
     _ = x ^ 2 * y := by rw [xtrans, ytrans]
 
-theorem amgm_p12 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
+theorem amgm_p17 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x^4, x^4, y^4, z^4]
   let w := ![1, 1, 1, 1]
@@ -432,7 +616,7 @@ theorem amgm_p12 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^
     _ = (x ^ 8 )^ (4⁻¹: ℝ ) * (y ^ 4) ^ (4⁻¹: ℝ ) * (z ^ 4) ^ (4⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
     _ = x ^ 2 * y * z := by rw [xtrans, ytrans, ztrans]
 
-theorem amgm_p13 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (2:ℝ) / 5 * x ^ 5 + (2:ℝ) / 5 * y ^ 5 + (1:ℝ) / 5 * z ^ 5 ≥ x^2 * y^2 * z := by
+theorem amgm_p18 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (2:ℝ) / 5 * x ^ 5 + (2:ℝ) / 5 * y ^ 5 + (1:ℝ) / 5 * z ^ 5 ≥ x^2 * y^2 * z := by
   -- Step 1: Define the three numbers to apply AM-GM
   let S := ![x^5, x^5, y^5, y^5, z^5]
   let w := ![1, 1, 1, 1, 1]
@@ -492,8 +676,205 @@ theorem amgm_p13 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (2:ℝ) / 5 * x ^
     _ = (x ^ 10 )^ (5⁻¹: ℝ ) * (y ^ 10) ^ (5⁻¹: ℝ ) * (z ^ 5) ^ (5⁻¹: ℝ ) := by rw [mul_rpow (by positivity) (by positivity)]
     _ = x ^ 2 * y ^ 2 * z := by rw [xtrans, ytrans, ztrans]
 
+theorem amgm_p19 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (3:ℝ)/5 * x^5 + (1:ℝ)/5 * y^5 + (1:ℝ)/5 * z^5 ≥ x ^ 3 * y * z := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^5, y^5, z^5]
+  let l := ![(3:ℝ)/5, (1:ℝ)/5, (1:ℝ)/5]
 
-theorem amgm_p14 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0) (g : x * y * z = (1 : ℝ)) : (4:ℝ) / 7 * x^3 * y + (1:ℝ) / 7 * y^3 * z + (2:ℝ) / 7 * z^3 * x ≥ x := by
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x4p : 0 < x ^ 4 := by nlinarith
+  have x5p : 0 < x ^ 5 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y4p : 0 < y ^ 4 := by nlinarith
+  have y5p : 0 < y ^ 5 := by nlinarith
+  have z2p : 0 < z ^ 2 := by nlinarith
+  have z4p : 0 < z ^ 4 := by nlinarith
+  have z5p : 0 < z ^ 5 := by nlinarith
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith [x5p, y5p, z5p]
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 3, l i := by
+      simp [l]
+      simp [Fin.sum_univ_three]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 3, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 3, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 3, (l i : ℝ) * S i) / (∑ i: Fin 3, (l i : ℝ)) := by
+      apply Real.geom_mean_le_arith_mean
+      exact l_nonneg
+      exact l_sump
+      exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  simp [Fin.sum_univ_three] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_three] at amgm
+
+  have xtrans : (x ^ 5) ^ (3/5: ℝ ) = x ^ 3 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hx) ]
+    norm_num
+    norm_cast
+
+  have ytrans : (y ^ 5)^ (5⁻¹: ℝ ) = y := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hy)]
+    norm_num
+
+  have ztrans : (z ^ 5 )^ (5⁻¹: ℝ ) = z := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hz)]
+    norm_num
+
+  calc (3:ℝ)/5 * x^5 + (1:ℝ)/5 * y^5 + (1:ℝ)/5 * z^5 ≥ (x ^ 5) ^ (3/5: ℝ ) * (y ^ 5) ^ (5⁻¹:ℝ) * (z ^ 5) ^ (5⁻¹:ℝ) := by nlinarith
+    _ = x^3 * y * z := by rw [xtrans, ytrans, ztrans]
+
+theorem amgm_p20 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 0) : (1:ℝ)/3 * x^6 + (1:ℝ)/3 * y^6 + (1:ℝ)/6 * z^6 + (1:ℝ)/6 * w^6 ≥ x^2 * y^2 * z * w := by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^6, y^6, z^6, w^6]
+  let l := ![(1:ℝ)/3, (1:ℝ)/3, (1:ℝ)/6, (1:ℝ)/6]
+
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have x4p : 0 < x ^ 4 := by nlinarith
+  have x6p : 0 < x ^ 6 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have y4p : 0 < y ^ 4 := by nlinarith
+  have y6p : 0 < y ^ 6 := by nlinarith
+  have z2p : 0 < z ^ 2 := by nlinarith
+  have z4p : 0 < z ^ 4 := by nlinarith
+  have z6p : 0 < z ^ 6 := by nlinarith
+  have w2p : 0 < w ^ 2 := by nlinarith
+  have w4p : 0 < w ^ 4 := by nlinarith
+  have w6p : 0 < w ^ 6 := by nlinarith
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith [x6p, y6p, z6p, w6p]
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 4, l i := by
+      simp [l]
+      simp [Fin.sum_univ_four]
+      norm_num
+
+  -- Apply AM-GM inequality
+  have amgm : (∏ i : Fin 4, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 4, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 4, (l i : ℝ) * S i) / (∑ i: Fin 4, (l i : ℝ)) := by
+      apply Real.geom_mean_le_arith_mean
+      exact l_nonneg
+      exact l_sump
+      exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  simp [Fin.sum_univ_four] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_four] at amgm
+
+  have xtrans : (x ^ 6) ^ ((1: ℝ)/3 ) = x ^ 2 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hx) ]
+    norm_num
+
+  have ytrans : (y ^ 6)^ ((1: ℝ)/3 ) = y ^ 2 := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hy)]
+    norm_num
+
+  have ztrans : (z ^ 6 )^ (6⁻¹: ℝ ) = z := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hz)]
+    norm_num
+  
+  have wtrans : (w ^ 6 )^ (6⁻¹: ℝ ) = w := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hw)]
+    norm_num
+
+  calc (1:ℝ)/3 * x^6 + (1:ℝ)/3 * y^6 + (1:ℝ)/6 * z^6 + (1:ℝ)/6 * w^6 ≥ (x ^ 6) ^ ((1:ℝ)/3) * (y ^ 6) ^ ((1:ℝ)/3) * (z ^ 6) ^ (6⁻¹:ℝ) * (w ^ 6) ^ (6⁻¹:ℝ) := by nlinarith
+    _ = x^2 * y^2 * z * w := by rw [xtrans, ytrans, ztrans, wtrans]
+
+theorem amgm_p21 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (2:ℝ)/3 * x^2 + (1:ℝ)/6 * y^2 + (1:ℝ)/6 * z^2 ≥ x^((4:ℝ)/3) * y^((1:ℝ)/3) * z^((1:ℝ)/3):= by
+  -- Step 1: Define the three numbers to apply AM-GM
+  let S := ![x^2, y^2, z^2]
+  let l := ![(2:ℝ)/3, (1:ℝ)/6, (1:ℝ)/6]
+
+  have x2p : 0 < x ^ 2 := by nlinarith
+  have y2p : 0 < y ^ 2 := by nlinarith
+  have z2p : 0 < z ^ 2 := by nlinarith
+
+  have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [S]
+        linarith [x2p, y2p, z2p]
+
+  have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+      intros i
+      fin_cases i
+      all_goals
+        simp [l]
+        <;> norm_num
+
+  have l_sump : 0 < ∑ i : Fin 3, l i := by
+      simp [l]
+      simp [Fin.sum_univ_three]
+      norm_num
+  
+  have amgm : (∏ i : Fin 3, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 3, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 3, (l i : ℝ) * S i) / (∑ i: Fin 3, (l i : ℝ)) := by
+      apply Real.geom_mean_le_arith_mean
+      exact l_nonneg
+      exact l_sump
+      exact h_nonneg
+
+  simp [S] at amgm
+  simp [l] at amgm
+  simp [Fin.sum_univ_three] at amgm
+  norm_num at amgm
+  simp [Fin.prod_univ_three] at amgm
+
+  have xtrans : (x ^ 2) ^ ((2: ℝ)/3 ) = x ^ ((4: ℝ)/3 ) := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hx) ]
+    norm_num
+
+  have ytrans : (y ^ 2 )^ ((1: ℝ)/6 ) = y ^ ((1: ℝ)/3 )  := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hy) ]
+    norm_num
+
+  have ztrans : (z ^ 2 )^ ((1: ℝ)/6 ) = z ^ ((1: ℝ)/3 ) := by
+    rw [← Real.rpow_natCast]
+    rw [← Real.rpow_mul (le_of_lt hz) ]
+    norm_num
+  
+  calc (2:ℝ)/3 * x^2 + (1:ℝ)/6 * y^2 + (1:ℝ)/6 * z^2 ≥ (x ^ 2) ^ ((2: ℝ)/3 ) * (y ^ 2 )^ ((1: ℝ)/6 ) * (z ^ 2 )^ ((1: ℝ)/6 ) := by nlinarith
+    _ = x ^ ((4: ℝ)/3 ) * y ^ ((1: ℝ)/3 ) * z ^ ((1: ℝ)/3 ) := by rw [xtrans, ytrans, ztrans]
+
+
+theorem amgm_p22 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0) (g : x * y * z = (1 : ℝ)) : (4:ℝ) / 7 * x^3 * y + (1:ℝ) / 7 * y^3 * z + (2:ℝ) / 7 * z^3 * x ≥ x := by
   -- We first transform the problem into homogeneous inequality using xyz = 1
   -- Then we apply AM-GM inequaltiy
   have homo : (4:ℝ) / 7 * x^3 * y + (1:ℝ) / 7 * y^3 * z + (2:ℝ) / 7 * z^3 * x ≥ x ^ 2 * y * z := by
@@ -585,7 +966,7 @@ theorem amgm_p14 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0) (g : x * y * z = (
     _ = x * (x * y * z) := by ring
     _ = x := by rw [g] ; simp
 
-theorem amgm_p15 (a b c d: ℝ)  (ap : a > 0)  (bp : b> 0) (cp : c> 0) ( dp : d> 0) (g : a * b * c * d = (1 : ℝ)) : (23:ℝ) / 51 * a^4 * b + (7:ℝ) / 51 * b^4 * c + (11:ℝ) / 51 * c^4 * d + (10:ℝ) / 51 * d^4 * a ≥ a := by
+theorem amgm_p23 (a b c d: ℝ)  (ap : a > 0)  (bp : b> 0) (cp : c> 0) ( dp : d> 0) (g : a * b * c * d = (1 : ℝ)) : (23:ℝ) / 51 * a^4 * b + (7:ℝ) / 51 * b^4 * c + (11:ℝ) / 51 * c^4 * d + (10:ℝ) / 51 * d^4 * a ≥ a := by
   -- We first transform the problem into homogeneous inequality using xyz = 1
   -- Then we apply AM-GM inequaltiy
   have homo : (23:ℝ) / 51 * a^4 * b + (7:ℝ) / 51 * b^4 * c + (11:ℝ) / 51 * c^4 * d + (10:ℝ) / 51 * d^4 * a ≥ a ^ 2 * b * c * d := by
@@ -686,3 +1067,128 @@ theorem amgm_p15 (a b c d: ℝ)  (ap : a > 0)  (bp : b> 0) (cp : c> 0) ( dp : d>
   calc (23:ℝ) / 51 * a^4 * b + (7:ℝ) / 51 * b^4 * c + (11:ℝ) / 51 * c^4 * d + (10:ℝ) / 51 * d^4 * a ≥ a ^ 2 * b * c * d := homo
     _ = a * (a * b * c * d) := by ring
     _ = a := by rw [g] ; simp
+
+theorem amgm_p24 (a b c : ℝ) (ap : a > 0) (bp : b> 0) (cp : c> 0) : a^3 + b^3 + c^3 ≥ a^2 * b + b^2 * c + c^2 * a := by
+  have x3y3gex2ylem (x y: ℝ )  (hx : x > 0) (hy : y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
+    -- Step 1: Define the three numbers to apply AM-GM
+    let S := ![x^3, y^3]
+    let l := ![(2:ℝ) / 3, (1:ℝ) / 3]
+
+    have x2p : 0 < x ^ 2 := by nlinarith
+    have x3p : 0 < x ^ 3 := by nlinarith
+    have y2p : 0 < y ^ 2 := by nlinarith
+    have y3p : 0 < y ^ 3 := by nlinarith
+
+    have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+        intros i
+        fin_cases i
+        all_goals
+          simp [S]
+          linarith
+
+    have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+        intros i
+        fin_cases i
+        all_goals
+          simp [l]
+          <;> norm_num
+
+    have l_sump : 0 < ∑ i : Fin 2, l i := by
+        simp [l]
+        norm_num
+
+    -- Apply AM-GM inequality
+    have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+      apply Real.geom_mean_le_arith_mean
+      exact l_nonneg
+      exact l_sump
+      exact h_nonneg
+
+    simp [S] at amgm
+    simp [l] at amgm
+    norm_num at amgm
+    simp [Fin.prod_univ_two] at amgm
+
+    have xtrans : (x ^ 3) ^ ((2:ℝ)/3) = x ^ 2 := by
+      rw [← Real.rpow_natCast]
+      rw [← Real.rpow_mul (le_of_lt hx) ]
+      norm_num
+
+    have ytrans : (y ^ 3 )^ (3⁻¹: ℝ ) = y := by
+      rw [← Real.rpow_natCast]
+      rw [← Real.rpow_mul (le_of_lt hy) ]
+      norm_num
+
+    calc (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3 ≥ (x ^ 3) ^ ((2:ℝ)/3) * (y ^ 3 )^ (3⁻¹: ℝ ) := by nlinarith
+      _ = x ^ 2 * y := by nlinarith
+  
+  have hab : (2:ℝ) / 3 * a^3 + (1:ℝ) / 3 * b^3  ≥ a^2 * b := by apply x3y3gex2ylem a b ap bp
+  have hbc : (2:ℝ) / 3 * b^3 + (1:ℝ) / 3 * c^3  ≥ b^2 * c := by apply x3y3gex2ylem b c bp cp
+  have hca : (2:ℝ) / 3 * c^3 + (1:ℝ) / 3 * a^3  ≥ c^2 * a := by apply x3y3gex2ylem c a cp ap
+
+  nlinarith
+
+theorem amgm_p25 (a b c : ℝ) (ap : a > 0) (bp : b> 0) (cp : c> 0) : a^7 + b^7 + c^7 ≥ a^4 * b^3 + b^4 * c^3 + c^4 * a^3 := by
+  have x7y7gex4y3lem (x y: ℝ ) (hx : x > 0 ) (hy : y> 0) : (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7  ≥ x^4 * y^3 := by
+    -- Step 1: Define the three numbers to apply AM-GM
+    let S := ![x^7, y^7]
+    let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
+
+    have x2p : 0 < x ^ 2 := by nlinarith
+    have x4p : 0 < x ^ 4 := by nlinarith
+    have x6p : 0 < x ^ 6 := by nlinarith
+    have x7p : 0 < x ^ 7 := by nlinarith
+    have y2p : 0 < y ^ 2 := by nlinarith
+    have y4p : 0 < y ^ 4 := by nlinarith
+    have y6p : 0 < y ^ 6 := by nlinarith
+    have y7p : 0 < y ^ 7 := by nlinarith
+
+    have h_nonneg : ∀ i ∈ Finset.univ, 0 ≤ S i := by
+        intros i
+        fin_cases i
+        all_goals
+          simp [S]
+          linarith
+
+    have l_nonneg : ∀ i ∈ Finset.univ, 0 ≤ l i := by
+        intros i
+        fin_cases i
+        all_goals
+          simp [l]
+          <;> norm_num
+
+    have l_sump : 0 < ∑ i : Fin 2, l i := by
+        simp [l]
+        norm_num
+
+    -- Apply AM-GM inequality
+    have amgm : (∏ i : Fin 2, S i ^ (l i : ℝ)) ^ ((∑ i : Fin 2, (l i : ℝ))⁻¹) ≤ (∑ i : Fin 2, (l i : ℝ) * S i) / (∑ i: Fin 2, (l i : ℝ)) := by
+      apply Real.geom_mean_le_arith_mean
+      exact l_nonneg
+      exact l_sump
+      exact h_nonneg
+
+    simp [S] at amgm
+    simp [l] at amgm
+    norm_num at amgm
+
+    have xtrans : (x ^ 7) ^ ((4:ℝ)/7) = x ^ 4 := by
+      rw [← Real.rpow_natCast]
+      rw [← Real.rpow_mul (le_of_lt hx) ]
+      norm_num
+      norm_cast
+
+    have ytrans : (y ^ 7 )^ ((3:ℝ)/7) = y ^ 3 := by
+      rw [← Real.rpow_natCast]
+      rw [← Real.rpow_mul (le_of_lt hy) ]
+      norm_num
+      norm_cast
+
+    calc (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7 ≥ (x ^ 7) ^ ((4:ℝ)/7) * (y ^ 7 )^ ((3:ℝ)/7) := by nlinarith
+      _ = x ^ 4 * y ^ 3 := by rw [xtrans, ytrans]
+  
+  have hab : (4:ℝ)/7 * a^7 + (3:ℝ)/7 * b^7  ≥ a^4 * b^3 := by apply x7y7gex4y3lem a b ap bp
+  have hbc : (4:ℝ)/7 * b^7 + (3:ℝ)/7 * c^7  ≥ b^4 * c^3 := by apply x7y7gex4y3lem b c bp cp
+  have hca : (4:ℝ)/7 * c^7 + (3:ℝ)/7 * a^7  ≥ c^4 * a^3 := by apply x7y7gex4y3lem c a cp ap
+
+  nlinarith
