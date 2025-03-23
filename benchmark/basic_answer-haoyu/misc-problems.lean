@@ -604,3 +604,38 @@ theorem schur_p5 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hab : a + 
   have eq1 : 2 * (x + y) ^ 2 * (y + z + (z + x)) + 2 * (y + z) ^ 2 * (z + x + (x + y)) + 2 * (z + x) ^ 2 * (x + y + (y + z)) - ((x + y) ^ 3 + (y + z) ^ 3 + (z + x) ^ 3 + 9 * (x + y) * (y + z) * (z + x)) = 2 * (3 * x * y * z + x^3 + y^3 + z^3 - (x^2 * z + x * z^2 + y^2 * z + y * z^2 + x^2 * y + x * y^2)) := by ring
 
   nlinarith
+
+theorem sq_p1 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : (a+b) * (b+c) * (c+a) ≥ 8 * a * b * c := by
+  have g : (a+b) * (b+c) * (c+a) - 8 * a * b * c ≥ 0 := by
+    calc (a+b) * (b+c) * (c+a) - 8 * a * b * c = a * (b-c)^2 + b * (c-a)^2 + c * (a-b)^2 := by ring
+      _ ≥ 0 := by nlinarith [ sq_nonneg (b-c) , sq_nonneg (c-a) , sq_nonneg (a-b)]
+  nlinarith
+
+theorem sq_p2 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a^2 * b^2 + b^2 * c^2 + c^2 * a^2 ≥ a * b * c * (a + b + c) := by
+  have g: a^2 * b^2 + b^2 * c^2 + c^2 * a^2 - a * b * c * (a + b + c) ≥ 0 := by
+    calc a^2 * b^2 + b^2 * c^2 + c^2 * a^2 - a * b * c * (a + b + c) = (1:ℝ)/2 * (b^2 * (a-c)^2 + a^2 * (b-c)^2 + c^2 * (a-b)^2) := by ring
+      _ ≥ 0 := by nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg (a-b), sq_nonneg (b-c), sq_nonneg (c-a)]
+  nlinarith
+
+theorem sq_p3 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a ^ 4 + b^4 + c^4 ≥ a * b * c * (a + b + c) := by
+  have abp : a * b > 0 := by nlinarith
+  have bcp : b * c > 0 := by nlinarith
+  have cap : c * a > 0 := by nlinarith
+
+  have g : a ^ 4 + b^4 + c^4 - a * b * c * (a + b + c) ≥ 0 := by
+    calc a ^ 4 + b^4 + c^4 - a * b * c * (a + b + c) = (1:ℝ)/2 * ((a^2 + b^2 + c^2 + 2 * a * b) * (a-b)^2 + (a^2 + b^2 + c^2 + 2 * b * c) * (b-c)^2 + (a^2 + b^2 + c^2 + 2 * c * a) * (c-a)^2) := by ring
+      _ ≥ 0 := by nlinarith [sq_nonneg (a-b), sq_nonneg (b-c), sq_nonneg (c-a)]
+
+  nlinarith
+
+theorem sq_p4 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : (a+b+c)^3 ≥ 27 * a * b * c := by
+  have g : (a+b+c)^3 - 27 * a * b * c ≥ 0 := by
+    calc (a+b+c)^3 - 27 * a * b * c = (1:ℝ)/2 * ((a+b+7*c) * (a-b)^2 + (a+c+7*b) * (a-c)^2 + (b+c+7*a) * (b-c)^2) := by ring
+      _ ≥ 0 := by nlinarith [ sq_nonneg (b-c) , sq_nonneg (c-a) , sq_nonneg (a-b)]
+  nlinarith
+
+theorem sq_p5 (a b c d: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hd : d > 0) : a^2 + b^2 + c^2 + d^2 ≥ a*b + b*c + c*d + d*a := by
+  have g : a^2 + b^2 + c^2 + d^2 - a*b - b*c - c*d - d*a ≥ 0 := by
+    calc a^2 + b^2 + c^2 + d^2 - a*b - b*c - c*d - d*a = (1:ℝ)/2 * ( (a-b)^2 + (b-c)^2 + (c-d)^2 + (d-a)^2 ) := by ring
+      _ ≥ 0 := by nlinarith
+  nlinarith
