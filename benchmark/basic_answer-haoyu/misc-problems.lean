@@ -543,14 +543,64 @@ theorem schur_p2 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b 
   nlinarith
 
 
+theorem schur_p3 (a b c t: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hab : a ≥ b)(hbc : b ≥ c) (ht : t > 0) : a^t * (a - b) * (a - c) + b^t * (b - c) * (b - a) + c^t * (c - a) * (c - b) ≥ 0 := by
+  have hab1 : a - b ≥ 0 := by linarith
+  have hbc1 : b - c ≥ 0 := by linarith
+  have hca1 : a - c ≥ 0 := by linarith
+  have ha1 : a^t > 0 := by positivity
+  have hb1 : b^t > 0 := by positivity
+  have hc1 : c^t > 0 := by positivity
+  have h1 : (a - b) * (a^t * (a - c) - b^t * (b - c)) + c^t * (a - c) * (b - c) ≥ 0 := by
+    have : c^t * (a - c) * (b - c) ≥ 0 := by positivity
+    have : a^t * (a - c) - b^t * (b - c) ≥ 0 := by
+      have eq : a^t * (a - c) - b^t * (b - c) = (a^t - b^t) * (a - c) + b^t * (a - b) := by ring
+      rw [eq]
+      have : b^t ≤ a^t := by
+        apply Real.rpow_le_rpow
+        positivity
+        linarith
+        positivity
+      have : a^t - b^t ≥ 0 := by linarith
+      positivity
+    positivity
+  nlinarith
 
 
--- theorem schur (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a * (a-b) * (a-c) + b * (b-a) * (b-c) + c * (c-a) * (c-b) ≥ 0 := by
---   nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a), mul_pos ha hb, mul_pos hb hc, mul_pos hc ha,
---     mul_self_nonneg (a - b + c), mul_self_nonneg (b - c + a), mul_self_nonneg (c - a + b)]
+theorem schur_p4 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1): 5 * (a^2 + b^2 + c^2) ≤ 6 * (a^3 + b^3 + c^3) + 1 := by
+  have schur : a^2 * c + a * c^2 + b^2 * c + b * c^2 + a^2 * b + a * b^2 ≤ 3 * a * b * c + a^3 + b^3 + c^3 := by nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a), mul_pos ha hb, mul_pos hb hc, mul_pos hc ha, mul_self_nonneg (a - b + c), mul_self_nonneg (b - c + a), mul_self_nonneg (c - a + b)]
+
+  have ineq : 5 * (a^3 + b^3 + c^3) + 5 * (a^2 * c + a * c^2 + b^2 * c + b * c^2 + a^2 * b + a * b^2) ≤ 7 * (a^3 + b^3 + c^3) + 3 * (a^2 * c + a * c^2 + b^2 * c + b * c^2 + a^2 * b + a * b^2) + 6 * a * b * c := by linarith
+
+  have eq1 : 5 * (a^3 + b^3 + c^3) + 5 * (a^2 * c + a * c^2 + b^2 * c + b * c^2 + a^2 * b + a * b^2) = 5 * (a^2 + b^2 + c^2) * (a + b + c) := by ring
+  have eq2 : 7 * (a^3 + b^3 + c^3) + 3 * (a^2 * c + a * c^2 + b^2 * c + b * c^2 + a^2 * b + a * b^2) + 6 * a * b * c = 6 * (a^3 + b^3 + c^3) + (a + b + c)^3 := by ring
+
+  rw [eq1, eq2] at ineq
+  rw [h] at ineq
+  norm_num at ineq
+  exact ineq
 
 
+theorem schur_p5 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hab : a + b > c) (hbc : b + c > a) (hca : c + a > b) : 2 * a^2 * (b + c) + 2 * b^2 * (c + a) + 2 * c^2 * (a + b) ≥ a^3 + b^3 + c^3 + 9 * a * b * c := by
+  let x := (a + c - b) / 2
+  let y := (a + b - c) / 2
+  let z := (b + c - a) / 2
+  have hx : x > 0 := by
+    have : a + c - b > 0 := by linarith
+    positivity
+  have hy : y > 0 := by
+    have : a + b - c > 0 := by linarith
+    positivity
+  have hz : z > 0 := by
+    have : b + c - a > 0 := by linarith
+    positivity
+  have ha1 : a = x + y := by ring
+  have hb1 : b = y + z := by ring
+  have hc1 : c = z + x := by ring
 
--- theorem schur_p3 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : a^2 + b^2 + c^2 + 3 ≥ 2 * (1 / a + 1 / b + 1 / c) := by
---   have schur : (a + b + c)^3 + 9 * a * b * c ≥ 4 * (a * b + b * c + c * a) * (a + b + c) := by nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a), mul_pos ha hb, mul_pos hb hc, mul_pos hc ha, mul_self_nonneg (a - b + c), mul_self_nonneg (b - c + a), mul_self_nonneg (c - a + b)]
---   have ineq1 :
+  rw [ha1, hb1, hc1]
+
+  have schur : x^2 * z + x * z^2 + y^2 * z + y * z^2 + x^2 * y + x * y^2 ≤ 3 * x * y * z + x^3 + y^3 + z^3 := by nlinarith [sq_nonneg (x - y), sq_nonneg (y - z), sq_nonneg (z - x), mul_pos hx hy, mul_pos hy hz, mul_pos hz hx, mul_self_nonneg (x - y + z), mul_self_nonneg (y - z + x), mul_self_nonneg (z - x + y)]
+
+  have eq1 : 2 * (x + y) ^ 2 * (y + z + (z + x)) + 2 * (y + z) ^ 2 * (z + x + (x + y)) + 2 * (z + x) ^ 2 * (x + y + (y + z)) - ((x + y) ^ 3 + (y + z) ^ 3 + (z + x) ^ 3 + 9 * (x + y) * (y + z) * (z + x)) = 2 * (3 * x * y * z + x^3 + y^3 + z^3 - (x^2 * z + x * z^2 + y^2 * z + y * z^2 + x^2 * y + x * y^2)) := by ring
+
+  nlinarith
