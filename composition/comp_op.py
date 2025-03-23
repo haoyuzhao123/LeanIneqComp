@@ -1,19 +1,20 @@
+import copy
+import random
+
 from problem import IneqProblem
 
-def comp_add(P1, P2):
+def comp(P1, P2, mode="add"):
     """
     input: two problems P1 P2 : IneqProblem
     P1 statement : f1(X) \ge g1(X)
     P2 statement : f2(X) \ge g2(X)
     new problem P
-    P statement : f1(X) + f2(X) \ge g1(X) + g2(X)
-    P.statement_lhs : "f1(X) + f2(X)"
-    P.statement_rhs : "g1(X) + g2(X)"
+    P.statement_lhs and P.statement_rhs are determined by the mode
     """
     # set the variables of the new problem to be the union of P1 and P2
     v1 = P1.variables
     v2 = P2.variables
-    new_variables = v1.deepcopy()
+    new_variables = copy.deepcopy(v1)
     for v in v2:
         if v not in new_variables:
             new_variables.append(v)
@@ -29,10 +30,158 @@ def comp_add(P1, P2):
         P.set_condition(P2.condition)
     
     # set the statement
-    lhs = P1.statement_lhs + " + " + P2.statemnet_lhs
-    rhs = P1.statement_rhs + " + " + P2.statemnet_rhs
+    if mode=="add":
+        # direct addition
+        lhs, rhs = _comp_add(P1, P2)
+    elif mode=="weighted_sum":
+        lhs, rhs = _comp_weightedsum(P1, P2)
+    elif mode=="mul":
+        lhs, rhs = _comp_mul(P1, P2)
+    elif mode=="div":
+        lhs, rhs = _comp_div(P1, P2)
+    elif mode=="reciprocal":
+        lhs, rhs = _comp_reciprocal(P1, P2)
+    elif mode=="maxima":
+        lhs, rhs = _comp_maxima(P1, P2)
+    elif mode=="minima":
+        lhs, rhs = _comp_minima(P1, P2)
+    else:
+        raise ValueError("Not Implemented Comp Op")
 
     P.set_statement_lhs(lhs)
     P.set_statement_rhs(rhs)
 
     return P
+
+def _comp_add(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : f1(X) + f2(X) \ge g1(X) + g2(X)
+    P.statement_lhs : "f1(X) + f2(X)"
+    P.statement_rhs : "g1(X) + g2(X)"
+    """
+    lhs = P1.statement_lhs + " + " + P2.statement_lhs
+    if random.randint(0,1) > 0:
+        rhs = P1.statement_rhs + " + " + P2.statement_rhs
+    else:
+        rhs = P2.statement_rhs + " + " + P1.statement_rhs
+    return lhs, rhs
+
+def _comp_weightedsum(P1, P2, mu=3, lamb=2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : mu * f1(X) + lamb * f2(X) \ge mu * g1(X) + lamb * g2(X)
+    P.statement_lhs : "mu * f1(X) + lamb * f2(X)"
+    P.statement_rhs : "mu * g1(X) + lamb * g2(X)"
+    """
+    lhs = f"({mu}:ℝ) * ({P1.statement_lhs}) + ({lamb}:ℝ) * ({P2.statement_lhs})"
+    if random.randint(0,1) > 0:
+        rhs = f"({mu}:ℝ) * ({P1.statement_rhs}) + ({lamb}:ℝ) * ({P2.statement_rhs})"
+    else:
+        rhs = f"({lamb}:ℝ) * ({P2.statement_rhs}) + ({mu}:ℝ) * ({P1.statement_rhs})"
+    return lhs, rhs
+
+def _comp_mul(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : f1(X) * f2(X) \ge g1(X) * g2(X)
+    P.statement_lhs : "f1(X) * f2(X)"
+    P.statement_rhs : "g1(X) * g2(X)"
+    """
+    lhs = f"({P1.statement_lhs}) * ({P2.statement_lhs})"
+    if random.randint(0,1) > 0:
+        rhs = f"({P1.statement_rhs}) * ({P2.statement_rhs})"
+    else:
+        rhs = f"({P2.statement_rhs}) * ({P1.statement_rhs})"
+    return lhs, rhs
+
+def _comp_div(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : f1(X) / g2(X) \ge g1(X) / f2(X)
+    P.statement_lhs : "f1(X) / g2(X)"
+    P.statement_rhs : "g1(X) / f2(X)"
+    """
+    lhs = f"({P1.statement_lhs}) / ({P2.statement_rhs})"
+    rhs = f"({P1.statement_rhs}) / ({P2.statement_lhs})"
+    return lhs, rhs
+
+def _comp_reciprocal(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : 1 / g1(X) + 1 / g2(X) \ge 1 / f1(X) + 1 / f2(X)
+    P.statement_lhs : "1 / g1(X) + 1 / g2(X)"
+    P.statement_rhs : "1 / f1(X) + 1 / f2(X)"
+    """
+    lhs = f"(1:ℝ)/({P1.statement_rhs}) + (1:ℝ)/({P2.statement_rhs})"
+    if random.randint(0,1) > 0:
+        rhs = f"(1:ℝ)/({P1.statement_lhs}) + (1:ℝ)/({P2.statement_lhs})"
+    else:
+        rhs = f"(1:ℝ)/({P2.statement_lhs}) + (1:ℝ)/({P1.statement_lhs})"
+    return lhs, rhs
+
+def _comp_maxima(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : max f1(X)  f2(X) \ge max g1(X) g2(X)
+    P.statement_lhs : "max f1(X) f2(X)"
+    P.statement_rhs : "max g1(X) g2(X)"
+    """
+    lhs = f"max ({P1.statement_lhs}) ({P2.statement_lhs})"
+    if random.randint(0,1) > 0:
+        rhs = f"max ({P1.statement_rhs}) ({P2.statement_rhs})"
+    else:
+        rhs = f"max ({P2.statement_rhs}) ({P1.statement_rhs})"
+    return lhs, rhs
+
+def _comp_minima(P1, P2):
+    """
+    input: two problems P1 P2 : IneqProblem
+    P1 statement : f1(X) \ge g1(X)
+    P2 statement : f2(X) \ge g2(X)
+    new problem P
+    P statement : min f1(X)  f2(X) \ge min g1(X) g2(X)
+    P.statement_lhs : "min f1(X) f2(X)"
+    P.statement_rhs : "min g1(X) g2(X)"
+    """
+    lhs = f"min ({P1.statement_lhs}) ({P2.statement_lhs})"
+    if random.randint(0,1) > 0:
+        rhs = f"min ({P1.statement_rhs}) ({P2.statement_rhs})"
+    else:
+        rhs = f"min ({P2.statement_rhs}) ({P1.statement_rhs})"
+    return lhs, rhs
+
+if __name__ == '__main__':
+    P1 = IneqProblem()
+    P1.set_name("test")
+    P1.set_variables(["a", "b", "c"])
+    P1.set_condition("{a} + {b} + {c} = 1")
+    P1.set_statement_lhs("(1:ℝ)/{a} + (1:ℝ)/{b} + (1:ℝ)/{c}")
+    P1.set_statement_rhs("(9:ℝ)")
+
+    P2 = IneqProblem()
+    P2.set_name("test")
+    P2.set_variables(["b", "c", "d"])
+    P2.set_statement_lhs("({b} + {c} + {d}) * ((1:ℝ)/{b} + (1:ℝ)/{c} + (1:ℝ)/{d})")
+    P2.set_statement_rhs("(9:ℝ)")
+
+    P = comp(P1, P2, mode="minima")
+    print(P.to_lean())
