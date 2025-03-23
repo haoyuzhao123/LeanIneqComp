@@ -529,7 +529,6 @@ theorem schur_p2 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b 
     exact h
 
   rw [h1, h2, h3]
-  -- field_simp
 
   have eq1 : x / y + y / z + z / x + 1 / (x / y) + 1 / (y / z) + 1 / (z / x) = (x ^ 2 * z + x * z ^ 2 + y ^ 2 * z + y * z ^ 2 + x ^ 2 * y + x * y ^ 2) / (x * y * z) := by
     field_simp [hx, hy, hz]
