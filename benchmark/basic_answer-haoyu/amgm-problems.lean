@@ -127,7 +127,7 @@ theorem amgm_p4 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x + (1:ℝ) / 3
   nlinarith
 
 theorem amgm_p5 (x y: ℝ )  (h : x > 0 ∧ y> 0): (4:ℝ) / 7 * x + (3:ℝ) / 7 * y  ≥ x^((4:ℝ) / 7) * y^((3:ℝ) / 7) := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the two numbers to apply weighted AM-GM
   let S := ![x, y]
   let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
 
@@ -462,7 +462,7 @@ theorem amgm_p13 (x y: ℝ )  (h : x > 0 ∧ y> 0): (4:ℝ) / 5 * x ^ 5 + (1:ℝ
     _ = x ^ 4 * y := by rw [xtrans, ytrans]
 
 theorem amgm_p14 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 6 + (1:ℝ) / 3 * y ^ 6  ≥ x^4 * y^2 := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the two numbers to apply AM-GM
   let S := ![x^6, y^6]
   let l := ![(2:ℝ) / 3, (1:ℝ) / 3]
 
@@ -518,7 +518,7 @@ theorem amgm_p14 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 6 + (1:ℝ
     _ = x ^ 4 * y^2 := by rw [xtrans, ytrans]
 
 theorem amgm_p15 (x y: ℝ )  (h : x > 0 ∧ y> 0): (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7  ≥ x^4 * y^3 := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the two numbers to apply AM-GM
   let S := ![x^7, y^7]
   let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
 
@@ -623,7 +623,7 @@ theorem amgm_p16 (x y: ℝ )  (h : x > 0 ∧ y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ
     _ = x ^ 2 * y := by rw [xtrans, ytrans]
 
 theorem amgm_p17 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^ 4 + (1:ℝ) / 4 * y ^ 4 + (1:ℝ) / 4 * z ^ 4 ≥ x^2 * y * z := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the four numbers to apply AM-GM
   let S := ![x^4, x^4, y^4, z^4]
   let w := ![1, 1, 1, 1]
 
@@ -677,7 +677,7 @@ theorem amgm_p17 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (1:ℝ) / 2 * x ^
     _ = x ^ 2 * y * z := by rw [xtrans, ytrans, ztrans]
 
 theorem amgm_p18 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0): (2:ℝ) / 5 * x ^ 5 + (2:ℝ) / 5 * y ^ 5 + (1:ℝ) / 5 * z ^ 5 ≥ x^2 * y^2 * z := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the five numbers to apply AM-GM
   let S := ![x^5, x^5, y^5, y^5, z^5]
   let w := ![1, 1, 1, 1, 1]
 
@@ -803,7 +803,7 @@ theorem amgm_p19 (x y z: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (3:ℝ)/5
     _ = x^3 * y * z := by rw [xtrans, ytrans, ztrans]
 
 theorem amgm_p20 (x y z w: ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 0) : (1:ℝ)/3 * x^6 + (1:ℝ)/3 * y^6 + (1:ℝ)/6 * z^6 + (1:ℝ)/6 * w^6 ≥ x^2 * y^2 * z * w := by
-  -- Step 1: Define the three numbers to apply AM-GM
+  -- Step 1: Define the four numbers to apply AM-GM
   let S := ![x^6, y^6, z^6, w^6]
   let l := ![(1:ℝ)/3, (1:ℝ)/3, (1:ℝ)/6, (1:ℝ)/6]
 
@@ -938,7 +938,7 @@ theorem amgm_p22 (x y z: ℝ )  (h : x > 0 ∧ y> 0 ∧ z> 0) (g : x * y * z = (
   -- We first transform the problem into homogeneous inequality using xyz = 1
   -- Then we apply AM-GM inequaltiy
   have homo : (4:ℝ) / 7 * x^3 * y + (1:ℝ) / 7 * y^3 * z + (2:ℝ) / 7 * z^3 * x ≥ x ^ 2 * y * z := by
-    -- Step 1: Define the seven numbers to apply AM-GM
+    -- Step 1: Define the three numbers to apply AM-GM
     let S := ![x^3 * y, y^3 * z, z^3 * x]
     let w := ![(4:ℝ) / 7, (1:ℝ) / 7, (2:ℝ) / 7]
 
@@ -1030,7 +1030,7 @@ theorem amgm_p23 (a b c d: ℝ)  (ap : a > 0)  (bp : b> 0) (cp : c> 0) ( dp : d>
   -- We first transform the problem into homogeneous inequality using xyz = 1
   -- Then we apply AM-GM inequaltiy
   have homo : (23:ℝ) / 51 * a^4 * b + (7:ℝ) / 51 * b^4 * c + (11:ℝ) / 51 * c^4 * d + (10:ℝ) / 51 * d^4 * a ≥ a ^ 2 * b * c * d := by
-    -- Step 1: Define the seven numbers to apply AM-GM
+    -- Step 1: Define the four numbers to apply AM-GM
     let S := ![a^4 * b, b^4 * c, c^4 * d, d^4 * a]
     let w := ![(23:ℝ) / 51, (7:ℝ) / 51, (11:ℝ) / 51, (10:ℝ) / 51]
 
@@ -1130,7 +1130,7 @@ theorem amgm_p23 (a b c d: ℝ)  (ap : a > 0)  (bp : b> 0) (cp : c> 0) ( dp : d>
 
 theorem amgm_p24 (a b c : ℝ) (ap : a > 0) (bp : b> 0) (cp : c> 0) : a^3 + b^3 + c^3 ≥ a^2 * b + b^2 * c + c^2 * a := by
   have x3y3gex2ylem (x y: ℝ )  (hx : x > 0) (hy : y> 0): (2:ℝ) / 3 * x ^ 3 + (1:ℝ) / 3 * y ^ 3  ≥ x^2 * y := by
-    -- Step 1: Define the three numbers to apply AM-GM
+    -- Step 1: Define the two numbers to apply AM-GM
     let S := ![x^3, y^3]
     let l := ![(2:ℝ) / 3, (1:ℝ) / 3]
 
@@ -1190,7 +1190,7 @@ theorem amgm_p24 (a b c : ℝ) (ap : a > 0) (bp : b> 0) (cp : c> 0) : a^3 + b^3 
 
 theorem amgm_p25 (a b c : ℝ) (ap : a > 0) (bp : b> 0) (cp : c> 0) : a^7 + b^7 + c^7 ≥ a^4 * b^3 + b^4 * c^3 + c^4 * a^3 := by
   have x7y7gex4y3lem (x y: ℝ ) (hx : x > 0 ) (hy : y> 0) : (4:ℝ) / 7 * x ^ 7 + (3:ℝ) / 7 * y ^ 7  ≥ x^4 * y^3 := by
-    -- Step 1: Define the three numbers to apply AM-GM
+    -- Step 1: Define the two numbers to apply AM-GM
     let S := ![x^7, y^7]
     let l := ![(4:ℝ) / 7, (3:ℝ) / 7]
 
