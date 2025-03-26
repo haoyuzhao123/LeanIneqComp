@@ -6,41 +6,6 @@ open BigOperators Real Nat Topology Rat
 
 
 theorem cauchy_p24 (x y z: ℝ) (h : x > 0 ∧ y > 0 ∧ z > 0) (hxy : 2 * x - y^2 / x > 0) (hyz : 2 * y - z^2 / y > 0) (hzx : 2 * z - x^2 / z > 0) : x^3 / (2 * x - y^2 / x) + y^3 / (2 * y - z^2 / y) + z^3 / (2 * z - x^2 / z) ≥ x^2 + y^2 + z^2 := by
-  -- prove a common version of cauchy
-  have four_mul_le_sq_add (a b : ℝ) : 4 * a * b ≤ (a + b) ^ 2 := by
-    calc 4 * a * b
-      _ = 2 * a * b + 2 * a * b := by rw [mul_assoc, mul_assoc, ← add_mul]; norm_num
-      _ ≤ a ^ 2 + b ^ 2 + 2 * a * b := by gcongr; exact two_mul_le_add_sq _ _
-      _ = a ^ 2 + 2 * a * b + b ^ 2 := by rw [add_right_comm]
-      _ = (a + b) ^ 2 := (add_sq a b).symm
-  have two_mul_le_add_of_sq_eq_mul {a b r : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (ht : r ^ 2 = a * b) : 2 * r ≤ a + b := by
-    apply nonneg_le_nonneg_of_sq_le_sq (Left.add_nonneg ha hb)
-    conv_rhs => rw [← pow_two]
-    convert four_mul_le_sq_add a b using 1
-    rw [mul_mul_mul_comm, two_mul]; norm_num; rw [← pow_two, ht, mul_assoc]
-
-  have sum_sq_le_sum_mul_sum_of_sq_eq_mul (n : ℕ) (s : Finset (Fin n)) {r f g : Fin n → ℝ} (hf : ∀ i ∈ s, 0 ≤ f i) (hg : ∀ i ∈ s, 0 ≤ g i) (ht : ∀ i ∈ s, r i ^ 2 = f i * g i) : (∑ i ∈ s, r i) ^ 2 ≤ (∑ i ∈ s, f i) * ∑ i ∈ s, g i := by
-    obtain h | h := (Finset.sum_nonneg hg).eq_or_gt
-    · have ht' : ∑ i ∈ s, r i = 0 := Finset.sum_eq_zero fun i hi ↦ by
-        simpa [(Finset.sum_eq_zero_iff_of_nonneg hg).1 h i hi] using ht i hi
-      rw [h, ht']
-      simp
-    · refine le_of_mul_le_mul_of_pos_left
-        (le_of_add_le_add_left (a := (∑ i ∈ s, g i) * (∑ i ∈ s, r i) ^ 2) ?_) h
-      calc
-        _ = ∑ i ∈ s, 2 * r i * (∑ j ∈ s, g j) * (∑ j ∈ s, r j) := by
-            simp_rw [mul_assoc, ← Finset.mul_sum, ← Finset.sum_mul]; ring
-        _ ≤ ∑ i ∈ s, (f i * (∑ j ∈ s, g j) ^ 2 + g i * (∑ j ∈ s, r j) ^ 2) := by
-            gcongr with i hi
-            have ht : (r i * (∑ j ∈ s, g j) * (∑ j ∈ s, r j)) ^ 2 =
-                (f i * (∑ j ∈ s, g j) ^ 2) * (g i * (∑ j ∈ s, r j) ^ 2) := by
-              conv_rhs => rw [mul_mul_mul_comm, ← ht i hi]
-              ring
-            refine le_of_eq_of_le ?_ (two_mul_le_add_of_sq_eq_mul
-              (mul_nonneg (hf i hi) (sq_nonneg _)) (mul_nonneg (hg i hi) (sq_nonneg _)) ht)
-            repeat rw [mul_assoc]
-        _ = _ := by simp_rw [Finset.sum_add_distrib, ← Finset.sum_mul]; ring
-
   have hx : x > 0 := h.1
   have hy : y > 0 := h.2.1
   have hz : z > 0 := h.2.2
@@ -56,19 +21,39 @@ theorem cauchy_p24 (x y z: ℝ) (h : x > 0 ∧ y > 0 ∧ z > 0) (hxy : 2 * x - y
     have h0 : 2 * z^2 - x^2 = z * (2 * z - x^2 / z) := by field_simp [sq]; ring
     rw [h0]
     apply smul_pos' hz hzx
+
   have h1 : (x^2 + y^2 + z^2) * (x^3 / (2 * x - y^2 / x) + y^3 / (2 * y - z^2 / y) + z^3 / (2 * z - x^2 / z)) ≥ (x^2 + y^2 + z^2)^2 := by
-    convert_to (∑ i : Fin 3, (![2 * x^2 - y^2, 2 * y^2 - z^2, 2 * z^2 - x^2] i)) *
-            (∑ i : Fin 3, (![x^3 / (2 * x - y^2 / x), y^3 / (2 * y - z^2 / y), z^3 / (2 * z - x^2 / z)] i)) ≥
-            (∑ i : Fin 3, ![x^2, y^2, z^2] i)^2
-    simp [Fin.sum_univ_three]; left; ring
+    convert_to (∑ i : Fin 3, (![√(2 * x^2 - y^2), √(2 * y^2 - z^2), √(2 * z^2 - x^2)] i)^2) *
+            (∑ i : Fin 3, (![√(x^3 / (2 * x - y^2 / x)), √(y^3 / (2 * y - z^2 / y)), √(z^3 / (2 * z - x^2 / z))] i)^2) ≥
+            (∑ i : Fin 3, ![√(2 * x^2 - y^2), √(2 * y^2 - z^2), √(2 * z^2 - x^2)] i * ![√(x^3 / (2 * x - y^2 / x)), √(y^3 / (2 * y - z^2 / y)), √(z^3 / (2 * z - x^2 / z))] i)^2
     simp [Fin.sum_univ_three]
-    apply sum_sq_le_sum_mul_sum_of_sq_eq_mul
-    intro i _
-    fin_cases i <;> field_simp [sq_nonneg] <;> simp [mul_div_right_comm, mul_assoc, sq] <;> rw [div_self] <;> ring_nf <;> linarith
-    intro i _
-    fin_cases i <;> simp <;> linarith
-    intro i _
-    fin_cases i <;> simp [sq_nonneg] <;> exact div_nonneg (pow_nonneg (by linarith) 3) (by linarith)
+    repeat rw [sq_sqrt]
+    field_simp; left; ring
+    exact div_nonneg (pow_nonneg (by linarith [hx]) _) (by linarith [hxy])
+    exact div_nonneg (pow_nonneg (by linarith [hy]) _) (by linarith [hyz])
+    exact div_nonneg (pow_nonneg (by linarith [hz]) _) (by linarith [hzx])
+    linarith; linarith; linarith
+    simp [Fin.sum_univ_three]
+    field_simp
+    repeat rw [mul_div_right_comm]
+    rw [mul_assoc 2 x x, ← sq, div_self, one_mul]
+    rw [mul_assoc 2 y y, ← sq, div_self, one_mul]
+    rw [mul_assoc 2 z z, ← sq, div_self, one_mul]
+    calc
+      x ^ 2 + y ^ 2 + z ^ 2
+        = sqrt (x ^ 4) + sqrt (y ^ 4) + sqrt (z ^ 4) := by
+          rw [← Real.sqrt_sq (sq_nonneg x), ← pow_mul]
+          rw [← Real.sqrt_sq (sq_nonneg y), ← pow_mul]
+          rw [← Real.sqrt_sq (sq_nonneg z), ← pow_mul]
+      _ = sqrt (x ^ 3) * sqrt x + sqrt (y ^ 3) * sqrt y + sqrt (z ^ 3) * sqrt z := by
+        rw [pow_succ x, Real.sqrt_mul]
+        rw [pow_succ y, Real.sqrt_mul]
+        rw [pow_succ z, Real.sqrt_mul]
+        repeat exact pow_nonneg (by linarith [hx, hy, hz]) _
+
+    repeat exact ne_of_gt (Real.sqrt_pos.mpr (by linarith))
+    apply Finset.sum_mul_sq_le_sq_mul_sq
+
   rw [sq (x ^ 2 + y ^ 2 + z ^ 2)] at h1
   apply le_of_mul_le_mul_left h1
   nlinarith
