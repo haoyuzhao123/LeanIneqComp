@@ -3,6 +3,23 @@ import random
 
 from problem import IneqProblem
 
+def random_comp(problem_list1, problem_list2, num, name="comp_p"):
+    new_problem_list = []
+    random_comp_list = ["add","weighted_sum","mul","div","reciprocal","maxima","minima"]
+    for i in range(num):
+        while True:
+            try:
+                comp_op = random.choice(random_comp_list)
+                P1 = random.choice(problem_list1)
+                P2 = random.choice(problem_list2)
+                new_p = comp(P1, P2, mode=comp_op)
+                new_p.set_name(f"{name}{i}")
+                new_problem_list.append(new_p)
+                break
+            except:
+                print("Error happen during composition, retry")
+    return new_problem_list
+
 def comp(P1, P2, mode="add"):
     """
     input: two problems P1 P2 : IneqProblem

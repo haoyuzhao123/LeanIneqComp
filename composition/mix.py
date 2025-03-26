@@ -37,6 +37,8 @@ if __name__ == '__main__':
     pp = read_problems_from_jsonl("original_problems.jsonl")
     pp = [algebraic_op.algebraic_op(p, "reset_from_a") for p in pp]
     
-    new_p = algebraic_op.random_algebraic_op(pp, 10)
-    for p in new_p:
+    new_p_alg = algebraic_op.random_algebraic_op(pp, 10)
+    new_p_comp = comp_op.random_comp(pp, new_p_alg, 10)
+    new_p_comp2 = comp_op.random_comp(new_p_comp, new_p_alg, 10)
+    for p in new_p_comp2:
         print(p.to_lean())
