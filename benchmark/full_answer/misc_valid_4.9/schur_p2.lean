@@ -31,5 +31,6 @@ theorem schur_p2 (a b c: ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b 
 
   have schur : x^2 * z + x * z^2 + y^2 * z + y * z^2 + x^2 * y + x * y^2 ≤ 3 * x * y * z + x^3 + y^3 + z^3 := by nlinarith [sq_nonneg (x - y), sq_nonneg (y - z), sq_nonneg (z - x), mul_pos hx hy, mul_pos hy hz, mul_pos hz hx, mul_self_nonneg (x - y + z), mul_self_nonneg (y - z + x), mul_self_nonneg (z - x + y)]
 
-  rw [← div_le_div_iff_of_pos_right pos] at schur
+  have same : x * y * z ≤ x * y * z := by linarith
+  have ineq := div_le_div (by positivity) schur pos same
   nlinarith
