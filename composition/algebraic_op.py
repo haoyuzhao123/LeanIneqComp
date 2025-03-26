@@ -4,6 +4,35 @@ import string
 
 from problem import IneqProblem
 
+def random_algebraic_op(problem_list, num, name="algtrans_p"):
+    # generate num new problems using random algebraic op
+    new_problem_list = []
+    ranodm_op_list = ["sqrt_all","sqrt_random","sq_all","sq_random","cube_all","cube_random","reciprocal_all","reciprocal_random","exp_all","exp_random","log_all","log_random"]
+    for i in range(num):
+        while True:
+            try:
+                op_mode = random.choice(ranodm_op_list)
+                orig_p = random.choice(problem_list)
+                new_p = algebraic_op(orig_p, mode=op_mode)
+                
+                further_op = random.choice(["no","reset_from_a","shift_var","mod_var_idx"])
+                if further_op != "no":
+                    if further_op == "shift_var" or further_op == "reset_from_a":
+                        new_p = algebraic_op(new_p, mode=further_op)
+                    else:
+                        nv = len(new_p.variables)
+                        #print(new_p.variables)
+                        new_p = algebraic_op(new_p, mode="shift_var")
+                        new_p = algebraic_op(new_p, mode="shift_var")
+                        new_p = algebraic_op(new_p, mode="shift_var")
+                        new_p = algebraic_op(new_p, mode="mod_var_idx", additional_arg=(nv+2))
+                new_p.set_name(f"{name}{i}")
+                new_problem_list.append(new_p)
+                break
+            except:
+                print("error, retry")
+    return new_problem_list
+
 def algebraic_op(P1, mode="reset_from_a", additional_arg=None):
     variables = P1.variables
     new_variable_list = None
@@ -51,10 +80,14 @@ def algebraic_op(P1, mode="reset_from_a", additional_arg=None):
         new_condition = [cond.format(**transform_dict) for cond in P1.condition]
         P.set_condition(new_condition)
     
+
     P.set_statement_lhs(P1.statement_lhs.format(**transform_dict))
     P.set_statement_rhs(P1.statement_rhs.format(**transform_dict))
 
     P.set_rhs_pos(P1.rhs_pos)
+
+    new_orig_probs = copy.deepcopy(P1.original_problem)
+    P.set_original_problem(new_orig_probs)
 
     return P
 
@@ -99,6 +132,7 @@ def _shift_var(P1):
     return transform_dict, new_variable_list
 
 def _mod_var_idx(P1, n):
+
     # shift by n
     # e.g., previous a b c, n=2
     # change to c d e
@@ -114,6 +148,7 @@ def _mod_var_idx(P1, n):
         i = char_to_index[v]
         # make sure the variables lies in a-z
         i = i % n
+
         str_temp = "{"+string.ascii_lowercase[i]+"}"
         transform_dict[v] = str_temp
         assert string.ascii_lowercase[i] not in new_variable_list , "Mod operation failed : two variables mapped to same after mod."
@@ -185,6 +220,8 @@ def _cube_random(P1):
     str_temp = "({"+vr+"}^3)"
     transform_dict[vr] = str_temp
 
+    return transform_dict
+
 def _reciprocal_all(P1):
     variables = P1.variables
     transform_dict = dict()
@@ -204,6 +241,7 @@ def _reciprocal_random(P1):
     vr = random.choice(variables)
     str_temp = "(1/{"+vr+"})"
     transform_dict[vr] = str_temp
+    return transform_dict
 
 def _exp_all(P1):
     variables = P1.variables
@@ -225,6 +263,8 @@ def _exp_random(P1):
     str_temp = "((Real.exp {"+v+"}) - 1)"
     transform_dict[vr] = str_temp
 
+    return transform_dict
+
 def _log_all(P1):
     variables = P1.variables
     transform_dict = dict()
@@ -244,6 +284,8 @@ def _log_random(P1):
     vr = random.choice(variables)
     str_temp = "(Real.log ({"+vr+"}+1))"
     transform_dict[vr] = str_temp
+
+    return transform_dict
 
 if __name__ == '__main__':
     P1 = IneqProblem()

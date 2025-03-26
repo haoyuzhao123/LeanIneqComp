@@ -1,0 +1,5 @@
+{"name": "amgm_p1", "variables": "x y z", "condition": "", "statement_lhs": "({x} + {y} + {z}) / 3", "statement_rhs": "({x} * {y} * {z}) ^ (3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p2", "variables": "x y", "condition": "", "statement_lhs": "(2 * {x} + {y}) / 3", "statement_rhs": "({x} * {x} * y) ^ (3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p3", "variables": "x y z w", "condition": "", "statement_lhs": "({x} + {y} + {z} + {w}) / 4", "statement_rhs": "({x} * {y} * {z} * {w}) ^ (4⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p4", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x} + (1:ℝ)/3 * {y}", "statement_rhs": "{x}^((2:ℝ)/3) * {y}^((1:ℝ)/3)", "rhs_pos": true}
+{"name": "amgm_p5", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/7 * {x} + (3:ℝ)/7 * {y}", "statement_rhs": "{x}^((4:ℝ)/7) * {y}^((3:ℝ)/7)", "rhs_pos": true}

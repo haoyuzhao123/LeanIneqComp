@@ -1,7 +1,7 @@
 # the file to define the class for each inequality problem
 
 class IneqProblem:
-    def __init__(self, name=None, variables=None, condition=None, statement_lhs=None, statement_rhs=None, rhs_pos=False):
+    def __init__(self, name=None, variables=None, condition=None, statement_lhs=None, statement_rhs=None, rhs_pos=False, original_problem=None):
         """
         name: str
             the name of the problem
@@ -32,9 +32,23 @@ class IneqProblem:
         self.statement_lhs = statement_lhs
         self.statement_rhs = statement_rhs
         self.rhs_pos=rhs_pos
+        # also record the original problem (for icl usage)
+        if original_problem == None:
+            self.original_problem = [self.name]
+        else:
+            if isinstance(original_problem, list):
+                self.original_problem = original_problem
+            else:
+                self.original_problem = [original_problem]
     
     def set_name(self, name):
         self.name = name
+    
+    def set_original_problem(self, original_problem):
+        if isinstance(original_problem, list):
+            self.original_problem = original_problem
+        else:
+            self.original_problem = [original_problem]
 
     def set_variables(self, variables):
         self.variables = variables

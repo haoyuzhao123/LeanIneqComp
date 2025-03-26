@@ -69,6 +69,12 @@ def comp(P1, P2, mode="add"):
     P.set_statement_rhs(rhs)
     P.set_rhs_pos(rhs_pos)
 
+    new_orig_probs = copy.deepcopy(P1.original_problem)
+    for orig_prob_name in P2.original_problem:
+        if orig_prob_name not in new_orig_probs:
+            new_orig_probs.append(orig_prob_name)
+    P.set_original_problem(new_orig_probs)
+
     return P
 
 def _comp_add(P1, P2):
