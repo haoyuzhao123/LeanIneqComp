@@ -3,3 +3,23 @@
 {"name": "amgm_p3", "variables": "x y z w", "condition": "", "statement_lhs": "({x} + {y} + {z} + {w}) / 4", "statement_rhs": "({x} * {y} * {z} * {w}) ^ (4⁻¹: ℝ)", "rhs_pos": true}
 {"name": "amgm_p4", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x} + (1:ℝ)/3 * {y}", "statement_rhs": "{x}^((2:ℝ)/3) * {y}^((1:ℝ)/3)", "rhs_pos": true}
 {"name": "amgm_p5", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/7 * {x} + (3:ℝ)/7 * {y}", "statement_rhs": "{x}^((4:ℝ)/7) * {y}^((3:ℝ)/7)", "rhs_pos": true}
+{"name": "amgm_p6", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/5 * {x} + (2:ℝ)/5 * {y} + (1:ℝ)/5 * {z}", "statement_rhs": "{x} ^ ((2:ℝ)/5) * {y} ^ ((2:ℝ)/5) * {z} ^ ((1:ℝ)/5)", "rhs_pos": true}
+{"name": "amgm_p7", "variables": "x y z w", "condition": "", "statement_lhs": "(1:ℝ)/3 * {x} + (1:ℝ)/3 * {y} + (1:ℝ)/6 * {z} + (1:ℝ)/6 * {w}", "statement_rhs": "{x} ^ ((1:ℝ)/3) * {y} ^ ((1:ℝ)/3) * {z} ^ ((1:ℝ)/6) * {w} ^ ((1:ℝ)/6)", "rhs_pos": true}
+{"name": "amgm_p8", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "1", "statement_rhs": "({x} * {y} * {z})^(3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p9", "variables": "x y", "condition": "{x} + 2 * {y} = 3", "statement_lhs": "1", "statement_rhs": "({x} * {y}^2)^(3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p10", "variables": "x y", "condition": "{x} + 2 * {y} = 3", "statement_lhs": "1", "statement_rhs": "{x} * {y}^2", "rhs_pos": true}
+{"name": "amgm_p11", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "1", "statement_rhs": "{x} * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p12", "variables": "x y z", "condition": "{x} + 2*{y} + 2*{z} = 3", "statement_lhs": "32", "statement_rhs": "{x} * {y}^2 * {z}^2", "rhs_pos": true}
+{"name": "amgm_p13", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/5 * {x}^5 + (1:ℝ)/5 * {y}^5", "statement_rhs": "{x}^4 * {y}", "rhs_pos": true}
+{"name": "amgm_p14", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^6 + (1:ℝ)/3 * {y}^6", "statement_rhs": "{x}^4 * {y}^2", "rhs_pos": true}
+{"name": "amgm_p15", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/7 * {x}^7 + (3:ℝ)/7 * {y}^7", "statement_rhs": "{x}^4 * {y}^3", "rhs_pos": true}
+{"name": "amgm_p16", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^3 + (1:ℝ)/3 * {y}^3", "statement_rhs": "{x}^2 * {y}", "rhs_pos": true}
+{"name": "amgm_p17", "variables": "x y z", "condition": "", "statement_lhs": "(1:ℝ)/2 * {x}^4 + (1:ℝ)/4 * {y}^4 + (1:ℝ)/4 * {z}^4", "statement_rhs": "{x}^2 * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p18", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/5 * {x}^5 + (2:ℝ)/5 * {y}^5 + (1:ℝ)/5 * {z}^5", "statement_rhs": "{x}^2 * {y}^2 * {z}", "rhs_pos": true}
+{"name": "amgm_p19", "variables": "x y z", "condition": "", "statement_lhs": "(3:ℝ)/5 * {x}^5 + (1:ℝ)/5 * {y}^5 + (1:ℝ)/5 * {z}^5", "statement_rhs": "{x}^3 * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p20", "variables": "x y z w", "condition": "", "statement_lhs": "(1:ℝ)/3 * {x}^6 + (1:ℝ)/3 * {y}^6 + (1:ℝ)/6 * {z}^6 + (1:ℝ)/6 * {w}^6", "statement_rhs": "{x}^2 * {y}^2 * {z} * {w}", "rhs_pos": true}
+{"name": "amgm_p21", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^2 + (1:ℝ)/6 * {y}^2 + (1:ℝ)/6 * {z}^2", "statement_rhs": "{x}^((4:ℝ)/3) * {y}^((1:ℝ)/3) * {z}^((1:ℝ)/3)", "rhs_pos": true}
+{"name": "amgm_p22", "variables": "x y z", "condition": "{x} * {y} * {z} = 1", "statement_lhs": "(4:ℝ)/7 * {x}^3 * {y} + (1:ℝ)/7 * {y}^3 * {z} + (2:ℝ)/7 * {z}^3 * {x}", "statement_rhs": "{x}", "rhs_pos": true}
+{"name": "amgm_p23", "variables": "a b c d", "condition": "{a} * {b} * {c} * {d} = (1: ℝ)", "statement_lhs": "((23:ℝ) / 51 * {a}^4 * {b} + (7:ℝ) / 51 * {b}^4 * {c} + (11:ℝ) / 51 * {c}^4 * {d} + (10:ℝ) / 51 * {d}^4 * {a}", "statement_rhs": "{a}", "rhs_pos": true}
+{"name": "amgm_p24", "variables": "a b c", "condition": "", "statement_lhs": "{a}^3 + {b}^3 + {c}^3", "statement_rhs": "{a}^2 * {b} + {b}^2 * {c} + {c}^2 * {a}", "rhs_pos": true}
+{"name": "amgm_p25", "variables": "a b c", "condition": "", "statement_lhs": "{a}^7 + {b}^7 + {c}^7", "statement_rhs": "{a}^4 * {b}^3 + {b}^4 * {c}^3 + {c}^4 * {a}^3", "rhs_pos": true}

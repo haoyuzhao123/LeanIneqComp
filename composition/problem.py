@@ -110,6 +110,16 @@ class IneqProblem:
 
         return statement_str
 
+    def to_dict(self):
+        formal_statement = self.to_lean()
+        return dict(
+            name=self.name,
+            split="valid",
+            informal_statement="",
+            formal_statement=formal_statement,
+            original_problems=','.join(self.original_problem)
+        )
+
 if __name__ == '__main__':
     P = IneqProblem()
     P.set_name("test")

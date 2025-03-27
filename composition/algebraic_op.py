@@ -260,7 +260,7 @@ def _exp_random(P1):
         transform_dict[v] = str_temp
 
     vr = random.choice(variables)
-    str_temp = "((Real.exp {"+v+"}) - 1)"
+    str_temp = "((Real.exp {"+vr+"}) - 1)"
     transform_dict[vr] = str_temp
 
     return transform_dict
