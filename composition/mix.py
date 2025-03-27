@@ -21,7 +21,7 @@ def read_problems_from_jsonl(filename):
         else:
             P.set_variables([d["variables"]])
         if (d["condition"] != None) and (d["condition"] != ""):
-            P.set_condition(d["condition"])
+            P.set_condition(d["condition"].split(','))
         P.set_statement_lhs(d["statement_lhs"])
         P.set_statement_rhs(d["statement_rhs"])
         P.set_rhs_pos(d["rhs_pos"])
@@ -37,12 +37,13 @@ def problem_list_to_jsonl(problems, filename):
             f.write(json.dumps(d) + "\n")
 
 if __name__ == '__main__':
-    pp = read_problems_from_jsonl("sq_problems.jsonl")
+    pp = read_problems_from_jsonl("original_problems.jsonl")
     pp = [algebraic_op.algebraic_op(p, "reset_from_a") for p in pp]
     
-    new_p_alg = algebraic_op.random_algebraic_op(pp, 10)
-    new_p_comp = comp_op.random_comp(pp, pp, 10)
+    new_p_alg = algebraic_op.random_algebraic_op(pp, 75)
+    new_list = new_p_alg + pp
+    new_p_comp = comp_op.random_comp(new_list, new_list, 5000)
     #new_p_comp2 = comp_op.random_comp(new_p_comp, new_p_alg, 10)
     for p in new_p_comp:
         print(p.to_lean())
-    problem_list_to_jsonl(new_p_comp, "test_comp.jsonl")
+    problem_list_to_jsonl(new_p_comp, "test_amgm_comp_5000.jsonl")
