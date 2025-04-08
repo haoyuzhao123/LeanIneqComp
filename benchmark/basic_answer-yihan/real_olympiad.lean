@@ -39,3 +39,15 @@ theorem p13_gaokao_20 (x y : ℝ) (h : 5 * x^2 * y^2 + y^4 = 1) : x^2 + y^2 ≥ 
 theorem p14_gaokao_21 (a b : ℝ) (ha : a > 0) (hb : b > 0) : 1 / a + a / b^2 + b ≥ 2 * √2 := by sorry
 
 theorem p15_gaokao_18 (a b : ℝ) (h : a - 3 * b + 6 = 0) : (2 : ℝ) ^ a + 1 / ((8 : ℝ) ^ b) ≥ 1 / 4 := by sorry
+
+-- 以下来自 https://www.doc88.com/p-37216351366075.html
+
+theorem p16 (n : ℕ) (hn : n > 0) (a b : Fin n → ℝ) : (∑ i : Fin n, (a i * b i)) + √((∑ i : Fin n, (a i)^2) * (∑ i : Fin n, (b i)^2)) ≥ 2 / n * (∑ i : Fin n, a i) * (∑ i : Fin n, b i) := by sorry
+
+theorem p17 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : 2 * a^2 / (1 + a + a * b)^2 + 2 * b^2 / (1 + b + b * c)^2 + 2 * c^2 / (1 + c + c * a)^2 + 9 / ((1 + a + a * b) * (1 + b + b * c) * (1 + c + c * a)) ≥ 1 := by sorry
+
+theorem p18 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (√(x^2 + y^2) + √(y^2 + 4 * z^2) + √(z^2 + 16 * x^2)) / (9 * x + 3 * y + 5 * z) ≥ √5 / 5 := by sorry
+
+theorem p19 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a / (b + c) + b / (c + a) + 2 * c / (a + b) ≥ 2 := by sorry
+
+theorem p20 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hab : a ≠ b) (hbc : b ≠ c) (hca : c ≠ a) : a^2 / b + b^2 / c + c^2 / a ≥ a + b + c + 4 * (a - b)^2 / (a + b + c) := by sorry
