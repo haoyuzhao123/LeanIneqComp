@@ -1,0 +1,1 @@
+theorem thm_temp (a b c : ℝ) ( ha : a > 0 ) ( hb : b > 0 ) ( hc : c > 0 ) ( h0 : a + b + c = 1 ): Real.log ((1:ℝ)/a + (1:ℝ)/b + (1:ℝ)/c) ≥ Real.log ((9:ℝ)) := by
