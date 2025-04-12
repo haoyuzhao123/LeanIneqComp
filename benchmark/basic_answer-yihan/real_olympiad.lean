@@ -85,3 +85,33 @@ theorem p33_cauchy_4_1_23 (n : ℕ) (k : ℝ) (a : Fin n → ℝ) (hn : n > 0) (
 theorem p34_cauchy_4_2_8 (a b : ℝ) (ha : a > 0) (hb : b > 0) (h : a + b = 1) : (a + 1 / a)^2 + (b + 1 / b)^2 ≥ 25 / 2 := by sorry
 
 theorem p35_cauchy_4_2_12 (x y z : ℝ) (hx : x > -1) (hy : y > -1) (hz : z > -1) : (1 + x^2) / (1 + y + z^2) + (1 + y^2) / (1 + z + x^2) + (1 + z^2) / (1 + x + y^2) ≥ 2 := by sorry
+
+theorem p36_cauchy_4_3_2 (n : ℕ) (hn : n ≥ 2) (a : Fin n → ℝ) (ha : ∀ i, a i > 0) (h : ∑ i : Fin n, a i = 1) : ∑ i : Fin n, (a i / (2 - a i)) ≥ n / (2 * n - 1) := by sorry
+
+theorem p37_cauchy_4_3_5 (n : ℕ) (hn : n ≥ 2) (x : Fin n → ℝ) (hx : ∀ i, x i > 0) (h : ∑ i : Fin n, x i = 1) : ∑ i : Fin n, (x i / √(1 - x i)) ≥ 1 / √(n - 1) * ∑ i : Fin n, √(x i) := by sorry
+
+theorem p38_cauchy_4_3_13 (x y z w : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (hw : w > 0) : x / (y + 2 * z + 3 * w) + y / (z + 2 * w + 3 * x) + z / (w + 2 * x + 3 * y) + w / (x + 2 * y + 3 * z) ≥ 2 / 3 := by sorry
+
+theorem p39_cauchy_4_6_1 (a b c : ℝ) (h : a^2 + 2 * b^2 + 3 * c^2 = 3 / 2) : (3 : ℝ)^(-a) + (9 : ℝ)^(-b) + (27 : ℝ)^(-c) ≥ 1 := by sorry
+
+theorem p40_cauchy_4_6_2 (x y : ℝ) (hx : x^2 ≤ 1) (hy : y^2 ≤ 1) : x * √(1 - y^2) + y * √(1 - x^2) ≤ 1 := by sorry
+
+theorem p41_cauchy_4_6_3 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : 1 / (a^3 * (b + c)) + 1 / (b^3 * (c + a)) + 1 / (c^3 * (a + b)) ≥ 3 / 2 := by sorry
+
+theorem p42_mix_1_1_2 (x y z : ℝ) (h : x * y + y * z + z * x = -1) : x^2 + 5 * y^2 + 8 * z^2 ≥ 4 := by sorry
+
+theorem p43_mix_1_1_5 (a b c : ℝ) (h : a^2 + b^2 + c^2 = 1) : 1 / a^2 + 1 / b^2 + 1 / c^2 - 2 * (a^3 + b^3 + c^3) / (a * b * c) ≥ 3 := by sorry
+
+theorem p44_mix_1_2_7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : 1 / (a^3 + b^3 + a * b * c) + 1 / (b^3 + c^3 + a * b * c) + 1 / (c^3 + a^3 + a * b * c) ≤ 1 / (a * b * c) := by sorry
+
+theorem p45_mix_1_3_13 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a + b + c - 3 * (a * b * c) ^ (3⁻¹: ℝ) ≥ a + b - 2 * √(a * b) := by sorry
+
+theorem p46_mix_1_6_25 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x + y + z = 1) : y * z + z * x + x * y - 2 * x * y * z ≤ 7 / 27 := by sorry
+
+theorem p47_mix_1_6_26 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x + y + z = x * y * z) : x^2 + y^2 + z^2 - 2 * (y * z + z * x + x * y) + 9 ≥ 0 := by sorry
+
+theorem p48_mix_1_7_28 (a b : ℝ) (ha : a > 0) (hb : b > 0) : (a + 1)^2 / b + (b + 3)^2 / a ≥ 16 := by sorry
+
+theorem p49_mix_3_1_7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : 1 / (1 + a + b) + 1 / (1 + b + c) + 1 / (1 + c + a) ≤ 1 := by sorry
+
+theorem p50_mix_3_1_9 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (y^2 - x^2) / (z + x) + (z^2 - y^2) / (x + y) + (x^2 - z^2) / (y + z) ≥ 0 := by sorry
