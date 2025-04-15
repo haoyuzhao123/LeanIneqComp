@@ -12,9 +12,19 @@ theorem cauchy_p9 (x y z: ℝ) (h : x > 0 ∧ y > 0 ∧ z > 0) ( g : z * (x + y)
     convert_to (∑ i : Fin 3, (![√(z * (x + y)), √(x * (y + z)), √(y * (z + x))] i)^2) *
               (∑ i : Fin 3, (![√(z / (x + y)), √(x / (y + z)), √(y / (z + x))] i)^2) ≥
               (∑ i : Fin 3, (![√(z * (x + y)), √(x * (y + z)), √(y * (z + x))] i * ![√(z / (x + y)), √(x / (y + z)), √(y / (z + x))] i))^2
-    simp [Fin.sum_univ_three]
-    field_simp [mul_assoc, mul_comm, mul_left_comm, sq]
-    simp [Fin.sum_univ_three]
-    field_simp [mul_assoc, mul_comm, mul_left_comm, add_comm, add_left_comm]
+
+    have g1 : (z * (x + y) + x * (y + z) + y * (z + x)) * (z / (x + y) + x / (y + z) + y / (z + x)) =
+    (∑ i : Fin 3, ![√(z * (x + y)), √(x * (y + z)), √(y * (z + x))] i ^ 2) *
+    ∑ i : Fin 3, ![√(z / (x + y)), √(x / (y + z)), √(y / (z + x))] i ^ 2 := by
+      simp [Fin.sum_univ_three]
+      field_simp [mul_assoc, mul_comm, mul_left_comm, sq]
+    exact g1
+
+    have g2 : (x + y + z) ^ 2 = (∑ i : Fin 3,
+      ![√(z * (x + y)), √(x * (y + z)), √(y * (z + x))] i * ![√(z / (x + y)), √(x / (y + z)), √(y / (z + x))] i) ^ 2 := by
+      simp [Fin.sum_univ_three]
+      field_simp [mul_assoc, mul_comm, mul_left_comm, add_comm, add_left_comm]
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
   nlinarith

@@ -10,8 +10,15 @@ theorem cauchy_p1 (x y : ℝ) (h₂ : x > 0 ∧ y > 0) : ( x + y ) * ( 1 / x + 1
   convert_to (∑ i : Fin 2, (![√x, √y] i)^2) *
       (∑ i : Fin 2, (![1 / √x, 1 / √y] i)^2) ≥
       (∑ i : Fin 2, ![√x, √y] i * ![1 / √x, 1 / √y] i)^2
-  simp [Fin.sum_univ_two]
-  field_simp [sqrt_sq]
-  simp [Fin.sum_univ_two]
-  field_simp; norm_num
+
+  have g1 : (x + y) * (1 / x + 1 / y) = (∑ i : Fin 2, ![√x, √y] i ^ 2) * ∑ i : Fin 2, ![1 / √x, 1 / √y] i ^ 2 := by
+    simp [Fin.sum_univ_two]
+    field_simp [sqrt_sq]
+  exact g1
+
+  have g2 : 4 = (∑ i : Fin 2, ![√x, √y] i * ![1 / √x, 1 / √y] i) ^ 2 := by
+    simp [Fin.sum_univ_two]
+    field_simp; norm_num
+  exact g2
+
   apply Finset.sum_mul_sq_le_sq_mul_sq

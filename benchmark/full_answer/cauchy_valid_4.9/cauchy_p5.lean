@@ -13,20 +13,29 @@ theorem cauchy_p5 (x y z: ℝ) (h : x > 0 ∧ y > 0 ∧ z > 0) (g : x + y + z = 
     convert_to (∑ i : Fin 3, (![√(x), √(y), √(z)] i)^2) *
             (∑ i : Fin 3, (![√(4 / x), √(1 / y), √(9 / z)] i)^2) ≥
             (∑ i : Fin 3, ![√(x), √(y), √(z)] i * ![√(4 / x), √(1 / y), √(9 / z)] i)^2
-    simp [Fin.sum_univ_three]
-    field_simp
-    simp [Fin.sum_univ_three]
-    field_simp
-    have h11 : √4 = 2 := by
-      have h10 : √4 = √(2^2) := by norm_num
-      rw [h10, Real.sqrt_sq]
+
+    have g1 : (x + y + z) * (4 / x + 1 / y + 9 / z) =
+    (∑ i : Fin 3, ![√x, √y, √z] i ^ 2) * ∑ i : Fin 3, ![√(4 / x), √(1 / y), √(9 / z)] i ^ 2 := by
+      simp [Fin.sum_univ_three]
+      field_simp
+    exact g1
+
+    have g2 : 36 = (∑ i : Fin 3, ![√x, √y, √z] i * ![√(4 / x), √(1 / y), √(9 / z)] i) ^ 2 := by
+      simp [Fin.sum_univ_three]
+      field_simp
+      have h11 : √4 = 2 := by
+        have h10 : √4 = √(2^2) := by norm_num
+        rw [h10, Real.sqrt_sq]
+        norm_num
+      have h12 : Real.sqrt 9 = 3 := by
+        have h20 : √9 = √(3^2) := by norm_num
+        rw [h20, Real.sqrt_sq]
+        norm_num
+      simp [h11, h12]
       norm_num
-    have h12 : Real.sqrt 9 = 3 := by
-      have h20 : √9 = √(3^2) := by norm_num
-      rw [h20, Real.sqrt_sq]
-      norm_num
-    simp [h11, h12]
-    norm_num
-    rw [ge_iff_le]
+
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
   nlinarith
+

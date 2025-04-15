@@ -12,11 +12,18 @@ theorem cauchy_p4 (x y: ℝ) (hx : x ≥ 0) (hy : y ≥ 0) (hx1 : x ≤ 1) (hy1 
   convert_to (∑ i : Fin 2, ![x, √(1 - x^2)] i * ![√(1 - y^2), y] i)^2 ≤
           (∑ i : Fin 2, (![x, √(1 - x^2)] i)^2) *
           (∑ i : Fin 2, (![√(1 - y^2), y] i)^2)
-  simp [Fin.sum_univ_two]
-  field_simp; rw [mul_comm]
-  simp [Fin.sum_univ_two]
-  rw [sq_sqrt, sq_sqrt]
-  ring
-  nlinarith; nlinarith
+
+  have g1 : (x * √(1 - y ^ 2) + y * √(1 - x ^ 2)) ^ 2 = (∑ i : Fin 2, ![x, √(1 - x ^ 2)] i * ![√(1 - y ^ 2), y] i) ^ 2 := by
+    simp [Fin.sum_univ_two]
+    field_simp; rw [mul_comm]
+  exact g1
+
+  have g2 : 1 ^ 2 = (∑ i : Fin 2, ![x, √(1 - x ^ 2)] i ^ 2) * ∑ i : Fin 2, ![√(1 - y ^ 2), y] i ^ 2 := by
+    simp [Fin.sum_univ_two]
+    rw [sq_sqrt, sq_sqrt]
+    ring
+    nlinarith; nlinarith
+  exact g2
+
   apply Finset.sum_mul_sq_le_sq_mul_sq
   norm_num
