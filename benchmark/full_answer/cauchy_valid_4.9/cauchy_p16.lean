@@ -9,9 +9,16 @@ theorem cauchy_p16 (x y a b: ℝ) (hy : y ≠ 0) (hb : b ≠ 0) (hxy : x^2 + 1 /
     convert_to (∑ i : Fin 2, (![(1 / |y|), |x|] i)^2) *
             (∑ i : Fin 2, (![|a|, (1 / |b|)] i)^2) ≥
             (∑ i : Fin 2, ![(1 / |y|), |x|] i * ![|a|, (1 / |b|)] i)^2
-    simp [Fin.sum_univ_two]; left; ring
-    simp [Fin.sum_univ_two]
-    rw [abs_div, abs_div, inv_mul_eq_div, ← div_eq_mul_inv]
+
+    have g1 : (x ^ 2 + 1 / y ^ 2) * (a ^ 2 + 1 / b ^ 2) = (∑ i : Fin 2, ![1 / |y|, |x|] i ^ 2) * ∑ i : Fin 2, ![|a|, 1 / |b|] i ^ 2 := by
+      simp [Fin.sum_univ_two]; left; ring
+    exact g1
+
+    have g2 : (|a / y| + |x / b|)^2 = (∑ i : Fin 2, ![(1 / |y|), |x|] i * ![|a|, (1 / |b|)] i)^2 := by
+      simp [Fin.sum_univ_two]
+      rw [abs_div, abs_div, inv_mul_eq_div, ← div_eq_mul_inv]
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
 
   apply Real.sqrt_le_sqrt at h1
@@ -29,4 +36,5 @@ theorem cauchy_p16 (x y a b: ℝ) (hy : y ≠ 0) (hb : b ≠ 0) (hxy : x^2 + 1 /
     norm_num
     exact sqrt_nonneg _
     norm_num
+
   linarith

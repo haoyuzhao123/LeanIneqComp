@@ -17,15 +17,22 @@ theorem cauchy_p25 (n : ℕ) (x : Fin n → ℝ) (s : ℝ) (hn : n > 2) (hs : s 
   have h1 : (∑ i, (x i)^2 / (s - 2 * x i)) * (∑ i, (s - 2 * x i)) ≥ s^2 := by
     convert_to (∑ i, (x i / √(s - 2 * x i))^ 2) * (∑ i, (√(s - 2 * x i))^2) ≥
             (∑ i, (x i / √(s - 2 * x i)) * √(s - 2 * x i)) ^ 2
-    congr! with i1 _ i2 _
-    rw [div_pow, sq_sqrt]
-    linarith [hx i1]
-    rw [sq_sqrt]
-    linarith [hx i2]
-    rw [hs]
-    congr! with i
-    rw [div_mul, div_self, div_one]
-    exact ne_of_gt (Real.sqrt_pos.mpr (by linarith [hx i]))
+
+    have g1 : (∑ i, (x i)^2 / (s - 2 * x i)) * (∑ i, (s - 2 * x i)) = (∑ i, (x i / √(s - 2 * x i))^ 2) * (∑ i, (√(s - 2 * x i))^2) := by
+      congr! with i1 _ i2 _
+      rw [div_pow, sq_sqrt]
+      linarith [hx i1]
+      rw [sq_sqrt]
+      linarith [hx i2]
+      rw [hs]
+    exact g1
+
+    have g2 : s^2 = (∑ i, (x i / √(s - 2 * x i)) * √(s - 2 * x i)) ^ 2 := by
+      congr! with i
+      rw [div_mul, div_self, div_one]
+      exact ne_of_gt (Real.sqrt_pos.mpr (by linarith [hx i]))
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
 
   have h3 : (∑ i, (s - 2 * x i)) = (n - 2) * s:= by

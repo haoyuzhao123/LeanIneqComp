@@ -13,11 +13,19 @@ theorem cauchy_p20 (a b c : ℝ) (ha : a > 1) (hb : b > 1) (hc : c > 1) (h : (a^
     convert_to (∑ i : Fin 3, (![√2, √2, √3] i)^2) *
             (∑ i : Fin 3, (![√(a^2 / 2), √(b^2 / 2), √(c^2 / 3)] i)^2) ≥
             (∑ i : Fin 3, ![√2, √2, √3] i * ![√(a^2 / 2), √(b^2 / 2), √(c^2 / 3)] i)^2
-    simp [Fin.sum_univ_three]
-    field_simp; left; norm_num
-    simp [Fin.sum_univ_three]
-    field_simp
+
+    have g1 : 7 * (a^2 / 2 + b^2 / 2 + c^2 / 3) = (∑ i : Fin 3, (![√2, √2, √3] i)^2) * (∑ i : Fin 3, (![√(a^2 / 2), √(b^2 / 2), √(c^2 / 3)] i)^2) := by
+      simp [Fin.sum_univ_three]
+      field_simp; left; norm_num
+    exact g1
+
+    have g2 : (a + b + c)^2 = (∑ i : Fin 3, ![√2, √2, √3] i * ![√(a^2 / 2), √(b^2 / 2), √(c^2 / 3)] i)^2 := by
+      simp [Fin.sum_univ_three]
+      field_simp
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
+
   rw [h0] at h1
   norm_num at h1
   apply le_of_sq_le_sq
@@ -25,3 +33,4 @@ theorem cauchy_p20 (a b c : ℝ) (ha : a > 1) (hb : b > 1) (hc : c > 1) (h : (a^
     ring; norm_num
   nlinarith
   exact div_nonneg (mul_nonneg (by norm_num) (Real.sqrt_nonneg 3)) (by norm_num)
+

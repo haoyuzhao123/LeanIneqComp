@@ -16,10 +16,17 @@ theorem cauchy_p17 (a b c d e : ℝ) (h : (a - b)^2 + (b - c)^2 + (c - d)^2 + (d
     convert_to (∑ i : Fin 4, (![|x|, |y|, |z|, |w|] i)^2) *
             (∑ i : Fin 4, (![1, 1, 2, 2] i)^2) ≥
             (∑ i : Fin 4, ![|x|, |y|, |z|, |w|] i * ![1, 1, 2, 2] i)^2
-    simp [Fin.sum_univ_four]
-    left; norm_num
-    simp [Fin.sum_univ_four]
-    ring
+
+    have g1 : (x^2 + y^2 + z^2 + w^2) * 10 = (∑ i : Fin 4, (![|x|, |y|, |z|, |w|] i)^2) * (∑ i : Fin 4, (![1, 1, 2, 2] i)^2) := by
+      simp [Fin.sum_univ_four]
+      left; norm_num
+    exact g1
+
+    have g2 : (|x| + |y| + 2 * |z| + 2 * |w|) ^ 2 = (∑ i : Fin 4, ![|x|, |y|, |z|, |w|] i * ![1, 1, 2, 2] i) ^ 2 := by
+      simp [Fin.sum_univ_four]
+      ring
+    exact g2
+
     apply Finset.sum_mul_sq_le_sq_mul_sq
 
   apply Real.sqrt_le_sqrt at h2
@@ -32,6 +39,14 @@ theorem cauchy_p17 (a b c d e : ℝ) (h : (a - b)^2 + (b - c)^2 + (c - d)^2 + (d
     have : -2 * z ≤ 2 * |z| := by linarith [neg_le_abs z]
     have : -2 * w ≤ 2 * |w| := by linarith [neg_le_abs w]
     linarith
+
+    have nonneg : 0 ≤ |x| + |y| + 2 * |z| + 2 * |w| := by
+      apply add_nonneg
+      · apply add_nonneg;
+        · exact add_nonneg (abs_nonneg x) (abs_nonneg y)
+        · exact mul_nonneg (by norm_num) (abs_nonneg z)
+      · exact mul_nonneg (by norm_num) (abs_nonneg w)
+    exact nonneg
 
   rw [← h1] at h3
   linarith
