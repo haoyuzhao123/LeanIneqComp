@@ -54,7 +54,7 @@ theorem p20 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hab : a ≠ b)
 
 -- 以下来自网盘
 
-theorem p21 (x y : ℝ) (h : x^2 + y^2 ≥ 1) : 1 / 2 ≤ x^2 -x * y + y^2 := by sorry
+theorem p21 (x y : ℝ) (h : x^2 + y^2 ≥ 1) : 1 / 2 ≤ x^2 - x * y + y^2 := by sorry
 
 theorem p22 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : Real.log a + Real.log b + Real.log c ≤ Real.log ((a + b) / 2) + Real.log ((b + c) / 2) + Real.log ((c + a) / 2) := by sorry
 
@@ -115,3 +115,38 @@ theorem p48_mix_1_7_28 (a b : ℝ) (ha : a > 0) (hb : b > 0) : (a + 1)^2 / b + (
 theorem p49_mix_3_1_7 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : 1 / (1 + a + b) + 1 / (1 + b + c) + 1 / (1 + c + a) ≤ 1 := by sorry
 
 theorem p50_mix_3_1_9 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) : (y^2 - x^2) / (z + x) + (z^2 - y^2) / (x + y) + (x^2 - z^2) / (y + z) ≥ 0 := by sorry
+
+
+-- 以下为替换的题，来自 Inequalities (Problems and Solutions) by Keith Ong
+
+theorem p9_1_Pathfinder (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : (1 + a) / (1 - a) + (1 + b) / (1 - b) + (1 + c) / (1 - c) ≤ 2 * (a / b + b / c + c / a) := by sorry
+
+theorem p21_4_folklore (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 1) : (a + 1 / b) * (b + 1 / c) * (c + 1 / a) ≥ 1000 / 27 := by sorry
+
+theorem p10_5_india_2002 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : a / b + b / c + c / a ≥ (a + c) / (b + c) + (b + a) / (c + a) + (c + b) / (a + b) := by sorry
+
+theorem p31_8 (a b c : ℝ) (ha : a ≥ 1) (hb : b ≥ 1) (hc : c ≥ 1) : √(a - 1) + √(b - 1) + √(c - 1) ≤ √(c * (a * b + 1)) := by sorry
+
+theorem p49_10 (a b c d : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hd : d > 0) : 1 + 6 / (a * b + a * c + a * d + b * c + b * d + c * d) ≥ 8 / (a + b + c + d) := by sorry
+
+theorem p50_13 (a b c d : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hd : d > 0) (h : a * b * c * d = 1) : 1 / (5 * a^2 - 2 * a + 1) + 1 / (5 * b^2 - 2 * b + 1) + 1 / (5 * c^2 - 2 * c + 1) + 1 / (5 * d^2 - 2 * d + 1) ≥ 1 := by sorry
+
+theorem p14_15 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) : 1 / (a^2 + b^2 + a * b) + 1 / (b^2 + c^2 + b * c) + 1 / (c^2 + a^2 + c * a) ≥ 9 / (a + b + c) := by sorry
+
+theorem p2_22_folklore (a b c d : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (hd : d > 0) : a / (b + c) + b / (c + d) + c / (d + a) + d / (a + b) ≥ 2 := by sorry
+
+theorem p8_25_german_tst2012 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a^2 + b^2 + c^2 ≥ 3) : (a + 1) * (b + 2) / ((b + 1) * (b + 5)) + (b + 1) * (c + 2) / ((c + 1) * (c + 5)) + (c + 1) * (a + 2) / ((a + 1) * (a + 5)) ≥ 3 / 2 := by sorry
+
+theorem p44_27 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b + b * c + c * a = 3) : 1 / (1 + a^2 * (b + c)) + 1 / (1 + b^2 * (c + a)) + 1 / (1 + c^2 * (a + b)) ≤ 1 / (a * b * c) := by sorry
+
+theorem p47_28 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b + b * c + c * a = 1) : √(3 * a^2 + b^2) / (a * b) + √(3 * b^2 + c^2) / (b * c) + √(3 * c^2 + a^2) / (c * a) ≥ 6 * √3 := by sorry
+
+theorem p13_30_APMO2004 (a b c : ℝ) : (a^2 + 2) * (b^2 + 2) * (c^2 + 2) ≥ 3 * (a + b + c)^2 := by sorry
+
+theorem p30_33 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b + b * c + c * a = 1) : a * b * c * (a + √(a^2 + 1)) * (b + √(b^2 + 1)) * (b + √(b^2 + 1)) ≤ 1 := by sorry
+
+theorem p34_34_romania2002 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (ha1 : a < 1) (hb1 : b < 1) (hc1 : c < 1) : √(a * b * c) + √((1 - a) * (1 - b) * (1 - c)) ≤ 1 := by sorry
+
+theorem p38_37 (x y z : ℝ) (hx : x > 0) (hy : y > 0) (hz : z > 0) (h : x + y + z = z * y + y * x + x * z) : (x + y) / (1 + z^2) + (y + z) / (1 + x^2) + (z + x) / (1 + y^2) ≥ 27 / (2 * x * y * z) := by sorry
+
+theorem p26_39_imo1996 (a b c : ℝ) (ha : a > 0) (hb : b > 0) (hc : c > 0) (h : a * b * c = 1) : a * b / (a^5 + b^5 + a * b) + b * c / (b^5 + c^5 + b * c) + c * a / (c^5 + a^5 + c * a) ≤ 1 := by sorry
