@@ -1,0 +1,5 @@
+{"name": "sq_p1", "variables": "a b c", "condition": "", "statement_lhs": "({a}+{b}) * ({b}+{c}) * ({c}+{a})", "statement_rhs": "8 * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p2", "variables": "a b c", "condition": "", "statement_lhs": "{a}^2 * {b}^2 + {b}^2 * {c}^2 + {c}^2 * {a}^2", "statement_rhs": "({a} + {b} + {c}) * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p3", "variables": "a b c", "condition": "", "statement_lhs": "{a}^4 + {b}^4 + {c}^4", "statement_rhs": "({a} + {b} + {c}) * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p4", "variables": "a b c", "condition": "", "statement_lhs": "({a} + {b} + {c})^3", "statement_rhs": "27 * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p5", "variables": "a b c d", "condition": "", "statement_lhs": "{a}^2 + {b}^2 + {c}^2 + {d}^2", "statement_rhs": "{a}*{b} + {b}*{c} + {c}*{d} + {d}*{a}", "rhs_pos": true}

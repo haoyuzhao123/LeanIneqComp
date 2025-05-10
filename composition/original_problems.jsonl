@@ -1,0 +1,65 @@
+{"name": "amgm_p1", "variables": "x y z", "condition": "", "statement_lhs": "({x} + {y} + {z}) / 3", "statement_rhs": "({x} * {y} * {z}) ^ (3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p2", "variables": "x y", "condition": "", "statement_lhs": "(2 * {x} + {y}) / 3", "statement_rhs": "({x} * {x} * {y}) ^ (3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p3", "variables": "x y z w", "condition": "", "statement_lhs": "({x} + {y} + {z} + {w}) / 4", "statement_rhs": "({x} * {y} * {z} * {w}) ^ (4⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p4", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x} + (1:ℝ)/3 * {y}", "statement_rhs": "{x}^((2:ℝ)/3) * {y}^((1:ℝ)/3)", "rhs_pos": true}
+{"name": "amgm_p5", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/7 * {x} + (3:ℝ)/7 * {y}", "statement_rhs": "{x}^((4:ℝ)/7) * {y}^((3:ℝ)/7)", "rhs_pos": true}
+{"name": "amgm_p6", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/5 * {x} + (2:ℝ)/5 * {y} + (1:ℝ)/5 * {z}", "statement_rhs": "{x} ^ ((2:ℝ)/5) * {y} ^ ((2:ℝ)/5) * {z} ^ ((1:ℝ)/5)", "rhs_pos": true}
+{"name": "amgm_p7", "variables": "x y z w", "condition": "", "statement_lhs": "(1:ℝ)/3 * {x} + (1:ℝ)/3 * {y} + (1:ℝ)/6 * {z} + (1:ℝ)/6 * {w}", "statement_rhs": "{x} ^ ((1:ℝ)/3) * {y} ^ ((1:ℝ)/3) * {z} ^ ((1:ℝ)/6) * {w} ^ ((1:ℝ)/6)", "rhs_pos": true}
+{"name": "amgm_p8", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "1", "statement_rhs": "({x} * {y} * {z})^(3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p9", "variables": "x y", "condition": "{x} + 2 * {y} = 3", "statement_lhs": "1", "statement_rhs": "({x} * {y}^2)^(3⁻¹: ℝ)", "rhs_pos": true}
+{"name": "amgm_p10", "variables": "x y", "condition": "{x} + 2 * {y} = 3", "statement_lhs": "1", "statement_rhs": "{x} * {y}^2", "rhs_pos": true}
+{"name": "amgm_p11", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "1", "statement_rhs": "{x} * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p12", "variables": "x y z", "condition": "{x} + 2*{y} + 2*{z} = 3", "statement_lhs": "32", "statement_rhs": "{x} * {y}^2 * {z}^2", "rhs_pos": true}
+{"name": "amgm_p13", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/5 * {x}^5 + (1:ℝ)/5 * {y}^5", "statement_rhs": "{x}^4 * {y}", "rhs_pos": true}
+{"name": "amgm_p14", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^6 + (1:ℝ)/3 * {y}^6", "statement_rhs": "{x}^4 * {y}^2", "rhs_pos": true}
+{"name": "amgm_p15", "variables": "x y", "condition": "", "statement_lhs": "(4:ℝ)/7 * {x}^7 + (3:ℝ)/7 * {y}^7", "statement_rhs": "{x}^4 * {y}^3", "rhs_pos": true}
+{"name": "amgm_p16", "variables": "x y", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^3 + (1:ℝ)/3 * {y}^3", "statement_rhs": "{x}^2 * {y}", "rhs_pos": true}
+{"name": "amgm_p17", "variables": "x y z", "condition": "", "statement_lhs": "(1:ℝ)/2 * {x}^4 + (1:ℝ)/4 * {y}^4 + (1:ℝ)/4 * {z}^4", "statement_rhs": "{x}^2 * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p18", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/5 * {x}^5 + (2:ℝ)/5 * {y}^5 + (1:ℝ)/5 * {z}^5", "statement_rhs": "{x}^2 * {y}^2 * {z}", "rhs_pos": true}
+{"name": "amgm_p19", "variables": "x y z", "condition": "", "statement_lhs": "(3:ℝ)/5 * {x}^5 + (1:ℝ)/5 * {y}^5 + (1:ℝ)/5 * {z}^5", "statement_rhs": "{x}^3 * {y} * {z}", "rhs_pos": true}
+{"name": "amgm_p20", "variables": "x y z w", "condition": "", "statement_lhs": "(1:ℝ)/3 * {x}^6 + (1:ℝ)/3 * {y}^6 + (1:ℝ)/6 * {z}^6 + (1:ℝ)/6 * {w}^6", "statement_rhs": "{x}^2 * {y}^2 * {z} * {w}", "rhs_pos": true}
+{"name": "amgm_p21", "variables": "x y z", "condition": "", "statement_lhs": "(2:ℝ)/3 * {x}^2 + (1:ℝ)/6 * {y}^2 + (1:ℝ)/6 * {z}^2", "statement_rhs": "{x}^((4:ℝ)/3) * {y}^((1:ℝ)/3) * {z}^((1:ℝ)/3)", "rhs_pos": true}
+{"name": "amgm_p22", "variables": "x y z", "condition": "{x} * {y} * {z} = 1", "statement_lhs": "(4:ℝ)/7 * {x}^3 * {y} + (1:ℝ)/7 * {y}^3 * {z} + (2:ℝ)/7 * {z}^3 * {x}", "statement_rhs": "{x}", "rhs_pos": true}
+{"name": "amgm_p23", "variables": "a b c d", "condition": "{a} * {b} * {c} * {d} = (1: ℝ)", "statement_lhs": "((23:ℝ) / 51 * {a}^4 * {b} + (7:ℝ) / 51 * {b}^4 * {c} + (11:ℝ) / 51 * {c}^4 * {d} + (10:ℝ) / 51 * {d}^4 * {a}", "statement_rhs": "{a}", "rhs_pos": true}
+{"name": "amgm_p24", "variables": "a b c", "condition": "", "statement_lhs": "{a}^3 + {b}^3 + {c}^3", "statement_rhs": "{a}^2 * {b} + {b}^2 * {c} + {c}^2 * {a}", "rhs_pos": true}
+{"name": "amgm_p25", "variables": "a b c", "condition": "", "statement_lhs": "{a}^7 + {b}^7 + {c}^7", "statement_rhs": "{a}^4 * {b}^3 + {b}^4 * {c}^3 + {c}^4 * {a}^3", "rhs_pos": true}
+{"name": "cauchy_p1", "variables": "x y", "condition": "", "statement_lhs": "({x} + {y}) * ( 1 / {x} + 1 / {y} )", "statement_rhs": "4", "rhs_pos": true}
+{"name": "cauchy_p2", "variables": "x y z", "condition": "", "statement_lhs": "( {x} + {y} + {z} ) * ( 1 / {x} + 1 / {y} + 1 / {z} )", "statement_rhs": "9", "rhs_pos": true}
+{"name": "cauchy_p3", "variables": "x y", "condition": "{x} + {y} ≤ 1", "statement_lhs": "4 * {x}^2 + 4 * {y}^2 + (1 - {x} - {y})^2", "statement_rhs": "(2:ℝ)/3", "rhs_pos": true}
+{"name": "cauchy_p4", "variables": "x y", "condition": "{x} ≤ 1 ∧ {y} ≤ 1", "statement_lhs": "1", "statement_rhs": "{x} * √(1 - {y}^2) + {y} * √(1 - {x}^2)", "rhs_pos": true}
+{"name": "cauchy_p5", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "4 / {x} + 1 / {y} + 9 / {z}", "statement_rhs": "12", "rhs_pos": true}
+{"name": "cauchy_p6", "variables": "a b c", "condition": "", "statement_lhs": "{a} / ({b} + {c}) + {b} / ({c} + {a}) + {c} / ({a} + {b})", "statement_rhs": "(3:ℝ)/2", "rhs_pos": true}
+{"name": "cauchy_p7", "variables": "a b c d", "condition": "{a} + {b} + {c} + {d} = 1", "statement_lhs": "1 / ({b} + {c} + {d}) + 1 / ({c} + {d} + {a}) + 1 / ({a} + {b} + {d}) + 1 / ({a} + {b} + {c})", "statement_rhs": "(16:ℝ)/3", "rhs_pos": true}
+{"name": "cauchy_p8", "variables": "x y z", "condition": "{x} * ({x} + {y}) + {y} * ({y} + {z}) + {z} * ({z} + {x}) = 1", "statement_lhs": "{x} / ({x} + {y}) + {y} / ({y} + {z}) + {z} / ({z} + {x})", "statement_rhs": "({x} + {y} + {z}) ^ 2", "rhs_pos": true}
+{"name": "cauchy_p9", "variables": "x y z", "condition": "{z} * ({x} + {y}) + {x} * ({y} + {z}) + {y} * ({z} + {x}) = 1", "statement_lhs": "{z} / ({x} + {y}) + {x} / ({y} + {z}) + {y} / ({z} + {x})", "statement_rhs": "({x} + {y} + {z}) ^ 2", "rhs_pos": true}
+{"name": "cauchy_p10", "variables": "x y", "condition": "√(2 * {x} + 1) + √(2 * {y} + 3) = 4", "statement_lhs": "{x} + {y}", "statement_rhs": "2", "rhs_pos": true}
+{"name": "cauchy_p11", "variables": "x y z", "condition": "", "statement_lhs": "7 / 4", "statement_rhs": "({x} + {y} + {z})^2 / ({x}^2 + 2 * {y}^2 + 4 * {z}^2)", "rhs_pos": true}
+{"name": "cauchy_p12", "variables": "x y", "condition": "1 / (2 * {x} + {y}) + 3 / ({x} + {y}) = 2", "statement_lhs": "6 * {x} + 5 * {y}", "statement_rhs": "13 / 2 + 2 * √3", "rhs_pos": true}
+{"name": "cauchy_p13", "variables": "a b c", "condition": "{a} + {b} + {c} = 1", "statement_lhs": "√15", "statement_rhs": "√(2 * {a} + 1) + √(2 * {b} + 1) + √(2 * {c} + 1)", "rhs_pos": true}
+{"name": "cauchy_p16", "variables": "x y a b", "condition": "{x}^2 + 1 / {y}^2 = 1 ∧ {a}^2 + 1 / {b}^2 = 4", "statement_lhs": "2", "statement_rhs": "{a} / {y} + {x} / {b}", "rhs_pos": true}
+{"name": "cauchy_p17", "variables": "a b c d e", "condition": "({a} - {b})^2 + ({b} - {c})^2 + ({c} - {d})^2 + ({d} - {e})^2 = 1", "statement_lhs": "√10", "statement_rhs": "{a} - 2 * {b} - {c} + 2 * {e}", "rhs_pos": false}
+{"name": "cauchy_p19", "variables": "x y z", "condition": "1 / (1 + {x}^2) + 1 / (1 + {y}^2) + 1 / (1 + {z}^2) = 2", "statement_lhs": "{x}^2 + {y}^2 + {z}^2 + 3", "statement_rhs": "({x} + {y} + {z})^2", "rhs_pos": true}
+{"name": "cauchy_p20", "variables": "a b c", "condition": "{a} > 1,{b} > 1,{c} > 1,({a}^2-1)/2 + ({b}^2-1)/2 + ({c}^2-1)/3 = 1", "statement_lhs": "7 * √3 / 3", "statement_rhs": "{a} + {b} + {c}", "rhs_pos": true}
+{"name": "cauchy_p22", "variables": "a b c d e s", "condition": "{s} = {a} + {b} + {c} + {d} + {e}", "statement_lhs": "{a}^2 / ({a}^2 + {b} * ({s} - {b})) + {b}^2 / ({b}^2 + {c} * ({s} - {c})) + {c}^2 / ({c}^2 + {d} * ({s} - {d})) + {d}^2 / ({d}^2 + {e} * ({s} - {e})) + {e}^2 / ({e}^2 + {a} * ({s} - {a}))", "statement_rhs": "1", "rhs_pos": true}
+{"name": "cauchy_p23", "variables": "x y", "condition": "{x}^2 + {y}^2 / 2 = 1", "statement_lhs": "2 * √21 / 3", "statement_rhs": "{x} + √(2 + 3 * {y}^2)", "rhs_pos": true}
+{"name": "cauchy_p24", "variables": "x y z", "condition": "2 * {x} - {y}^2 / {x} > 0,2 * {y} - {z}^2 / {y} > 0,2 * {z} - {x}^2 / {z} > 0", "statement_lhs": "{x}^3 / (2 * {x} - {y}^2 / {x}) + {y}^3 / (2 * {y} - {z}^2 / {y}) + {z}^3 / (2 * {z} - {x}^2 / {z})", "statement_rhs": "{x}^2 + {y}^2 + {z}^2", "rhs_pos": true}
+{"name": "jensen_p1", "variables": "x y", "condition": "", "statement_lhs": "(1:ℝ)/3 * {x}^4 + (2:ℝ)/3 * {y}^4", "statement_rhs": "((1:ℝ)/3 * {x} + (2:ℝ)/3 * {y}) ^ 4", "rhs_pos": true}
+{"name": "jensen_p2", "variables": "x y", "condition": "", "statement_lhs": "(1:ℝ)/4 * Real.exp {x} + (3:ℝ)/4 * Real.exp {y}", "statement_rhs": "Real.exp ((1:ℝ)/4 * {x} + (3:ℝ)/4 * {y})", "rhs_pos": true}
+{"name": "jensen_p3", "variables": "x y", "condition": "", "statement_lhs": "(1:ℝ)/4 * {x} * Real.log {x} + (3:ℝ)/4 * {y} * Real.log {y}", "statement_rhs": "(1:ℝ)/4 * {x} + (3:ℝ)/4 * {y}) * Real.log ((1:ℝ)/4 * {x} + (3:ℝ)/4 * {y})", "rhs_pos": false}
+{"name": "jensen_p4", "variables": "x y z", "condition": "{x} + {y} + {z} = 3", "statement_lhs": "(1:ℝ)/3 * {x}^6 + (1:ℝ)/3 * {y} ^ 6 + (1:ℝ)/3 * {z} ^ 6", "statement_rhs": "1", "rhs_pos": true}
+{"name": "jensen_p5", "variables": "x y z", "condition": "", "statement_lhs": "((1:ℝ)/4 * {x} + (3:ℝ)/8 * {y} + (3:ℝ)/8 * {z}) ^ ((1:ℝ)/3)", "statement_rhs": "(1:ℝ)/4 * {x} ^ ((1:ℝ)/3) + (3:ℝ)/8 * {y} ^ ((1:ℝ)/3) + (3:ℝ)/8 * {z} ^ ((1:ℝ)/3)", "rhs_pos": true}
+{"name": "jensen_p6", "variables": "x y z", "condition": "", "statement_lhs": "Real.log ((1:ℝ)/4 * {x} + (3:ℝ)/8 * {y} + (3:ℝ)/8 * {z})", "statement_rhs": "(1:ℝ)/4 * Real.log {x} + (3:ℝ)/8 * Real.log {y} + (3:ℝ)/8 * Real.log {z}", "rhs_pos": false}
+{"name": "jensen_p7", "variables": "x y z", "condition": "", "statement_lhs": "Real.sqrt ((1:ℝ)/4 * {x} + (3:ℝ)/8 * {y} + (3:ℝ)/8 * {z})", "statement_rhs": "(1:ℝ)/4 * Real.sqrt {x} + (3:ℝ)/8 * Real.sqrt {y} + (3:ℝ)/8 * Real.sqrt {z}", "rhs_pos": true}
+{"name": "jensen_p8", "variables": "x y z", "condition": "{x} + {y} + {z} = (π:ℝ)", "statement_lhs": "√3 / 2", "statement_rhs": "(1:ℝ)/3 * Real.sin {x} + (1:ℝ)/3 * Real.sin {y} + (1:ℝ)/3 * Real.sin {z}", "rhs_pos": true}
+{"name": "jensen_p9", "variables": "x y z", "condition": "{x} + {y} + {z} = (π:ℝ)", "statement_lhs": "(1:ℝ) / 2", "statement_rhs": "(1:ℝ)/3 * Real.sin ({x}/2) + (1:ℝ)/3 * Real.sin ({y}/2) + (1:ℝ)/3 * Real.sin ({z}/2)", "rhs_pos": true}
+{"name": "jensen_p10", "variables": "x y z", "condition": "{x} + {y} + {z} = (π:ℝ)", "statement_lhs": "√3 / 2", "statement_rhs": "(1:ℝ)/3 * Real.cos ({x}/2) + (1:ℝ)/3 * Real.cos ({y}/2) + (1:ℝ)/3 * Real.cos ({z}/2)", "rhs_pos": true}
+{"name": "schur_p1", "variables": "a b c", "condition": "{a} * {b} * {c} = 1", "statement_lhs": "1", "statement_rhs": "{a} - 1 + 1 / {b}) * ({b} - 1 + 1 / {c}) * ({c} - 1 + 1 / {a})", "rhs_pos": false}
+{"name": "schur_p2", "variables": "a b c", "condition": "{a} * {b} * {c} = 1", "statement_lhs": "3 + {a} / {b} + {b} / {c} + {c} / {a}", "statement_rhs": "{a} + {b} + {c} + 1 / {a} + 1 / {b} + 1 / {c}", "rhs_pos": true}
+{"name": "schur_p3", "variables": "a b c t", "condition": "{a} ≥ {b},{b} ≥ {c}", "statement_lhs": "{a}^{t} * ({a} - {b}) * ({a} - {c}) + {b}^{t} * ({b} - {c}) * ({b} - {a}) + {c}^{t} * ({c} - {a}) * ({c} - {b})", "statement_rhs": "0", "rhs_pos": true}
+{"name": "schur_p4", "variables": "a b c", "condition": "{a} + {b} + {c} = 1", "statement_lhs": "6 * ({a}^3 + {b}^3 + {c}^3) + 1", "statement_rhs": "5 * ({a}^2 + {b}^2 + {c}^2)", "rhs_pos": true}
+{"name": "schur_p5", "variables": "a b c", "condition": "{a} + {b} > {c},{b} + {c} > {a},{c} + {a} > {b}", "statement_lhs": "2 * {a}^2 * ({b} + {c}) + 2 * {b}^2 * ({c} + {a}) + 2 * {c}^2 * ({a} + {b})", "statement_rhs": "{a}^3 + {b}^3 + {c}^3 + 9 * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p1", "variables": "a b c", "condition": "", "statement_lhs": "({a}+{b}) * ({b}+{c}) * ({c}+{a})", "statement_rhs": "8 * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p2", "variables": "a b c", "condition": "", "statement_lhs": "{a}^2 * {b}^2 + {b}^2 * {c}^2 + {c}^2 * {a}^2", "statement_rhs": "({a} + {b} + {c}) * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p3", "variables": "a b c", "condition": "", "statement_lhs": "{a}^4 + {b}^4 + {c}^4", "statement_rhs": "({a} + {b} + {c}) * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p4", "variables": "a b c", "condition": "", "statement_lhs": "({a} + {b} + {c})^3", "statement_rhs": "27 * {a} * {b} * {c}", "rhs_pos": true}
+{"name": "sq_p5", "variables": "a b c d", "condition": "", "statement_lhs": "{a}^2 + {b}^2 + {c}^2 + {d}^2", "statement_rhs": "{a}*{b} + {b}*{c} + {c}*{d} + {d}*{a}", "rhs_pos": true}
