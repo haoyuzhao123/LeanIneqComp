@@ -7,12 +7,22 @@ from problem import IneqProblem
 def random_algebraic_op(problem_list, num, name="algtrans_p"):
     # generate num new problems using random algebraic op
     new_problem_list = []
-    ranodm_op_list = ["sqrt_all","sqrt_random","sq_all","sq_random","cube_all","cube_random","reciprocal_all","reciprocal_random","exp_all","exp_random","log_all","log_random"]
+    ranodm_op_list = ["rep", "sqrt_all","sqrt_random","sq_all","sq_random","cube_all","cube_random","reciprocal_all","reciprocal_random","exp_all","exp_random","log_all","log_random"]
     for i in range(num):
         while True:
             try:
                 op_mode = random.choice(ranodm_op_list)
                 orig_p = random.choice(problem_list)
+                # with some probability to replicate the original problem (with new variables)
+                if op_mode == "rep":
+                    new_p = algebraic_op(orig_p, mode="shift_var")
+                    l = len(orig_p.variables)
+                    for _ in range(l-1):
+                        new_p = algebraic_op(new_p, mode="shift_var")
+                    new_p.set_name(f"{name}{i}")
+                    new_problem_list.append(new_p)
+                    break
+
                 new_p = algebraic_op(orig_p, mode=op_mode)
                 
                 further_op = random.choice(["no","reset_from_a","shift_var","mod_var_idx"])
