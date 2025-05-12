@@ -19,13 +19,5 @@
 If you find our work helps, please consider starring ⭐ us and citing:
 
 ```{bibtex}
-@misc{liu2025theoremprovingformulationframework,
-      title={Beyond Theorem Proving: Formulation, Framework and Benchmark for Formal Problem-Solving}, 
-      author={Qi Liu and Xinhao Zheng and Renqiu Xia and Xingzhi Qi and Qinxiang Cao and Junchi Yan},
-      year={2025},
-      eprint={2505.04528},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2505.04528}, 
-}
+
 ```
