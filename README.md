@@ -7,7 +7,9 @@
     <a href="#-citation">📖Citation
   </p>
   <br>
-  <img width="95%" src=assets/teaser.png>
+  <img width="33%" src=assets/fig-problem.png>
+  <img width="33%" src=assets/fig-acc.png>
+  <img width="33%" src=assets/fig-ratio.png>
 </div>
 
 ## 📊 Performance of Different Theorem Provers
