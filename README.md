@@ -3,7 +3,7 @@
 
   <p align="center" style="font-size: 30px">
     <a href="https://arxiv.org">📃Paper</a> • 
-    <a href="https://huggingface.co">🤗Data</a> • 
+    <a href="https://huggingface.co/datasets/zzzzzhy/Ineq-Comp">🤗Data</a> • 
     <a href="#-citation">📖Citation
   </p>
   <br>
