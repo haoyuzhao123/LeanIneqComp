@@ -41,8 +41,18 @@ parent_folder/
 
 ## 3. Quick Start
 
+### General-Purpose Models
 
-## 4. Performance of Different Theorem Provers
+### Whole-Proof Generation Methods
+
+### In-Context Learning Experiments
+
+### DeepSeek-Prover-V1.5-RL+RMaxTX
+
+### InternLM2.5-StepProver+BF
+
+
+## 4. Evaluation Results
 
 ### General-Purpose Models
 | Method                                          | Budget | AM-GM Seed         | AM-GM I            | AM-GM II           | Cauchy Seed        | Cauchy I           | Cauchy II          | Misc Seed          | Misc I             | Misc II            |
