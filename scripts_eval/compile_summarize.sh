@@ -7,7 +7,7 @@
 #SBATCH --time=23:59:00          # total run time limit (HH:MM:SS)
 #SBATCH --mail-type=all          # send email on job start, end and fault
 #SBATCH --output=slurm/%x-%j.out
-#SBATCH --partition=pli-c
+#SBATCH --partition=PARTITION
 
 echo "Executing on the machine:" $(hostname)
 
@@ -17,8 +17,6 @@ conda activate skillmixlean
 export LD_LIBRARY_PATH=/scratch/gpfs/haoyu/miniconda3/lib:$LD_LIBRARY_PATH
 
 export HF_HOME=/scratch/gpfs/haoyu/cache/
-
-#cd /scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5
 
 FIELD=complete
 
