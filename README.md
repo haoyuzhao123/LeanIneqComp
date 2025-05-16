@@ -1,18 +1,58 @@
 <div align="center">
     <h1> <a href="https://arxiv.org">Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities</a></h1>
+</div>
 
-  <p align="center" style="font-size: 30px">
-    <a href="https://arxiv.org">📃Paper</a> • 
-    <a href="https://huggingface.co/datasets/zzzzzhy/Ineq-Comp">🤗Data</a> • 
-    <a href="#-citation">📖Citation
-  </p>
-  <br>
+<div align="center">
+
+[![Hugging Face](https://img.shields.io/badge/-HuggingFace-3B4252?logo=huggingface)](https://huggingface.co/datasets/zzzzzhy/Ineq-Comp)
+[![arXiv](https://img.shields.io/badge/arXiv-1234.56789-b31b1b.svg?style=flat)](https://arxiv.org/abs/1234.56789)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+</div>
+
+## 1. Introduction
+
+We introduce Ineq-Comp, a benchmark built from elementary inequalities through systematic transformations, including variable duplication, algebraic rewriting, and multi-step composition. Although these problems remain easy for humans, we find that most provers&mdash;including Goedel, STP, and Kimina-7B&mdash;struggle significantly. DeepSeek-Prover-V2 shows relative robustness&mdash;possibly because it is trained to decompose the problems into sub-problems&mdash;but still suffers a 20\% performance drop (pass@32). Strikingly, performance remains poor for all models even when formal proofs of the constituent parts are provided in context, revealing that the source of weakness  is indeed in compositional reasoning. Our results expose a persisting gap between the generalization behavior of current AI provers and human mathematical intuition. 
+
+<div>
   <img width="30%" src=assets/fig-problem.png>
   <img width="30%" src=assets/fig-acc.png>
   <img width="30%" src=assets/fig-ratio.png>
 </div>
 
-## 📊 Performance of Different Theorem Provers
+## 2. Environment Setup
+
+### Lean 4 Environment
+
+The Lean 4 environment and the corresponding Mathlib version used in this project follow from [DeepSeek-Prover-V1.5](https://github.com/deepseek-ai/DeepSeek-Prover-V1.5). Please first install the correct Lean 4 and Mathlib version following the [environment setup guide](https://github.com/deepseek-ai/DeepSeek-Prover-V1.5/blob/main/README.md#4-setup-environment).
+
+### Copy Data and Testing Scripts
+
+After installing the corresponding Lean 4 environment, please copy the benchmark and scripts_eval folder to the parent folder where you build your Mathlib. You should get the following file strueture (only show the important folders).
+
+```text
+parent_folder/
+├── benchmark/
+├── configs/
+├── mathlib4/
+├── prover/
+└── scripts_eval/
+```
+
+## 3. Quick Start
+
+### General-Purpose Models
+
+### Whole-Proof Generation Methods
+
+### In-Context Learning Experiments
+
+### DeepSeek-Prover-V1.5-RL+RMaxTX
+
+### InternLM2.5-StepProver+BF
+
+
+## 4. Evaluation Results
 
 ### General-Purpose Models
 | Method                                          | Budget | AM-GM Seed         | AM-GM I            | AM-GM II           | Cauchy Seed        | Cauchy I           | Cauchy II          | Misc Seed          | Misc I             | Misc II            |
@@ -63,7 +103,7 @@
 
 
 
-## 📖 Citation
+## 5. Citation
 
 If you find our work helps, please consider starring ⭐ us and citing:
 

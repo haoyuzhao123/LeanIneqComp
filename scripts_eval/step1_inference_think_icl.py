@@ -7,10 +7,8 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser()
-# /scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/datasets/minif2f.jsonl
 parser.add_argument('--input_path',  type=str)
 parser.add_argument('--icl_folder',  type=str, default="/scratch/gpfs/haoyu/Deepseek/datasets/amgm_valid")
-# /scratch/gpfs/yl7690/models/DeepSeek-Prover-V1.5-RL
 parser.add_argument('--model_path', type=str)
 # results/test
 parser.add_argument('--output_dir',  type=str)
@@ -19,12 +17,8 @@ parser.add_argument('--n', default=32, type=int)
 parser.add_argument('--gpu', default=1, type=int)
 parser.add_argument('--seed', default=1, type=int)
 
-
-# parser.add_argument('--output_path', default="example_data/o1_sorried_output.json", type=str)
 args = parser.parse_args()
 
-
-# data_path = "/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/datasets/minif2f_sanity10.jsonl"
 data_path = args.input_path
 # Initialize an empty list to hold the dictionaries
 data_list = []
@@ -97,28 +91,7 @@ with open(data_path, 'r') as file:
 
 LEAN4_DEFAULT_HEADER = "import Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat\n\n"
 
-SYSTEM_PROMPT = "Your role as an assistant involves thoroughly exploring questions through a systematic long \
-        thinking process before providing the final precise and accurate solutions. This requires \
-        engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, \
-        backtracing, and iteration to develop well-considered thinking process. \
-        Please structure your response into two main sections: Thought and Solution. \
-        In the Thought section, detail your reasoning process using the specified format: \
-        <|begin_of_thought|> {thought with steps separated with '\n\n'} \
-        <|end_of_thought|> \
-        Each step should include detailed considerations such as analisying questions, summarizing \
-        relevant findings, brainstorming new ideas, verifying the accuracy of the current steps, refining \
-        any errors, and revisiting previous steps. \
-        In the Solution section, based on various attempts, explorations, and reflections from the Thought \
-        section, systematically present the final solution that you deem correct. The solution should \
-        remain a logical, accurate, concise expression style and detail necessary step needed to reach the \
-        conclusion, formatted as follows: \
-        <|begin_of_solution|> \
-        {final formatted, precise, and clear solution} \
-        <|end_of_solution|> \
-        Now, try to solve the following question through the above guidelines:"
-
 model_name = args.model_path
-# model_name = "/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/models/Translator_Qwen2.5-Coder-32B_numina_sonnet_130K_translator_Epoch2_LR1e-4"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 # model = LLM(model=model_name, max_num_batched_tokens=8192, seed=1, trust_remote_code=True, swap_space=8, tensor_parallel_size=args.gpu)
 model = LLM(model=model_name, seed=args.seed, trust_remote_code=True, swap_space=8, tensor_parallel_size=args.gpu, max_model_len=32768)

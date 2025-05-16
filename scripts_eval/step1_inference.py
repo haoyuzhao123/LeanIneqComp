@@ -6,22 +6,16 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser()
-# /scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/datasets/minif2f.jsonl
 parser.add_argument('--input_path',  type=str)
-# /scratch/gpfs/yl7690/models/DeepSeek-Prover-V1.5-RL
 parser.add_argument('--model_path', type=str)
-# results/test
 parser.add_argument('--output_dir',  type=str)
 parser.add_argument('--split', default="none", type=str)
 parser.add_argument('--n', default=32, type=int)
 parser.add_argument('--gpu', default=1, type=int)
 
-
-# parser.add_argument('--output_path', default="example_data/o1_sorried_output.json", type=str)
 args = parser.parse_args()
 
 
-# data_path = "/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/datasets/minif2f_sanity10.jsonl"
 data_path = args.input_path
 # Initialize an empty list to hold the dictionaries
 data_list = []
@@ -63,7 +57,6 @@ for data in data_list:
         )
 
 model_name = args.model_path
-# model_name = "/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/models/Translator_Qwen2.5-Coder-32B_numina_sonnet_130K_translator_Epoch2_LR1e-4"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 # model = LLM(model=model_name, max_num_batched_tokens=8192, seed=1, trust_remote_code=True, swap_space=8, tensor_parallel_size=args.gpu)
 model = LLM(model=model_name, seed=1, trust_remote_code=True, swap_space=8, tensor_parallel_size=args.gpu, max_model_len=4096)

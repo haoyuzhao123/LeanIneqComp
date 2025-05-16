@@ -58,7 +58,7 @@ MODEL_PATH=/scratch/gpfs/haoyu/models/stp
 
 
 SPLIT=none
-N=1024
+N=128
 OUTPUT_DIR=results/scripts_genmix_formal/extracted_perturb_problem_naive_hard_"$N"_r1-distill-qwen_full
 
 
@@ -107,5 +107,7 @@ python scripts_eval/step1_inference.py --input_path ${INPUT_PATH}  --model_path 
 
 INPUT_FILE=${OUTPUT_DIR}/to_inference_codes.json
 
-#sbatch scripts_eval/compile_summarize.sh -i $INPUT_FILE -o $OUTPUT_DIR
-sbatch scripts_eval/compile_summarize_test_repl.sh -i $INPUT_FILE -o $OUTPUT_DIR
+bash scripts_eval/compile_summarize.sh -i $INPUT_FILE -o $OUTPUT_DIR
+# uncomment the following if you are using SLURM
+# change the configuration to fit your SLURM system in the following file if needed
+# sbatch scripts_eval/compile_summarize.sh -i $INPUT_FILE -o $OUTPUT_DIR
