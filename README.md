@@ -7,6 +7,7 @@
 [![Hugging Face](https://img.shields.io/badge/-HuggingFace-3B4252?logo=huggingface)](https://huggingface.co/datasets/zzzzzhy/Ineq-Comp)
 [![arXiv](https://img.shields.io/badge/arXiv-1234.56789-b31b1b.svg?style=flat)](https://arxiv.org/abs/1234.56789)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Email me](https://img.shields.io/badge/Contact-6fcf97?logo=gmail)](mailto:thomaszhao1998@gmail.com)
 
 </div>
 
@@ -28,7 +29,7 @@ The Lean 4 environment and the corresponding Mathlib version used in this projec
 
 ### Copy Data and Testing Scripts
 
-After installing the corresponding Lean 4 environment, please copy the benchmark and scripts_eval folder to the parent folder where you build your Mathlib. You should get the following file strueture (only show the important folders).
+After installing the corresponding Lean 4 environment, please copy the `benchmark/` and `scripts_eval/` folder to the parent folder where you build your Mathlib. You should get the following file strueture (only show the important folders).
 
 ```text
 parent_folder/
@@ -43,16 +44,91 @@ parent_folder/
 
 ### General-Purpose Models
 
+Please run the following command to test DeepSeek-R1-Distill-Qwen-32B without the thinking block (chat template) under pass@32. This will test the model on the 25 seed problems from Ineq-AMGM.
+
+```sh
+bash scripts_eval/inference_2gpu.sh -i benchmark/amgm_seed.jsonl -m deepseek-ai/DeepSeek-R1-Distill-Qwen-32B -o results/amgm_seed_r1-distill-qwen-32b_nothink -n 32
+```
+
+The script will: (1) inference using VLLM and extract the Lean code (need 2 gpus); (2) submit the code to REPL and verified by Lean 4 compiler. (no gpu needed)
+
+For DeepSeek-R1-Distill-Qwen-32B with the thinking block, please run
+
+```sh
+bash scripts_eval/inference_think_2gpu.sh -i benchmark/amgm_seed.jsonl -m deepseek-ai/DeepSeek-R1-Distill-Qwen-32B -o results/amgm_seed_r1-distill-qwen-32b -n 32
+```
+
 ### Whole-Proof Generation Methods
 
-### In-Context Learning Experiments
+To test DeepSeek-Prover-V1.5-RL, Goedel-Prover-SFT, STP, please using the script that test DeepSeek-R1-Distill-Qwen-32B without the thinking block while changing the model to your target model (taking STP as an example).
+
+```sh
+bash scripts_eval/inference_2gpu.sh -i benchmark/amgm_seed.jsonl -m kfdong/STP_model_Lean -o results/amgm_seed_stp -n 32
+```
+
+For Kimina-Prover-Preview-Distill-7B, please run the following script
+
+```sh
+bash scripts_eval/inference_kimina_2gpu.sh -i benchmark/amgm_seed.jsonl -m AI-MO/Kimina-Prover-Preview-Distill-7B -o results/amgm_seed_kimina-7b -n 32
+```
+
+For DeepSeek-Prover-V2-7B, please run the following script
+
+```sh
+bash scripts_eval/inference_dsprover2_2gpu.sh -i benchmark/amgm_seed.jsonl -m deepseek-ai/DeepSeek-Prover-V2-7B -o results/amgm_seed_dsprover2-7b -n 32
+```
+
+The main logic under all these scripts is very similar, and the difference between different scirpts (for DeepSeek-R1-Distill-Qwen-32B, Kimina-Prover-Preview-Distill-7B, and DeepSeek-Prover-V2-7B) is the prompt and the response template.
+
+Note 1: all the scripts can be technically run with 2 H100 80GB GPUs. However, we recommend to use 4 H100 80GB GPUs when testing DeepSeek-R1-Distill-Qwen-32B, Kimina-Prover-Preview-Distill-7B, and DeepSeek-Prover-V2-7B, especially if you want to test with more than 16K generation length, since for some VLLM versions it might cause GPU OOM with only 2 gpus.
+
+Note 2: we highly recommend splitting the job into smaller ones, especially when testing DeepSeek-R1-Distill-Qwen-32B, Kimina-Prover-Preview-Distill-7B, and DeepSeek-Prover-V2-7B or testing models under high budget (pass@3200). We include the SLURM head in each scripts for better parallelization with more GPU resources, please refer to the scripts for more details.
+
 
 ### DeepSeek-Prover-V1.5-RL+RMaxTX
 
+The experiments for DeepSeek-Prover-V1.5-RL+RMaxTX can be reproduced using exactly the same command in the original DeepSeek-Prover-V1.5 repo, by changing the dataset to the benchmark dataset (`benchmark/amgm_seed.jsonl`) in configs/RMaxTS.py file:
+
+```sh
+python -m prover.launch --config=configs/RMaxTS.py --log_dir=logs/RMaxTS_results
+```
+
+Please refer to [DeepSeek-Prover-V1.5](https://github.com/deepseek-ai/DeepSeek-Prover-V1.5/tree/main#5-quick-start) codebase for more details.
+
 ### InternLM2.5-StepProver+BF
 
+The evaluation code is based on the [InternLM Github Repo](https://github.com/InternLM/InternLM-Math/tree/main), and particularly, the [evaluation code](https://github.com/InternLM/InternLM-Math/tree/main/minif2f) for MiniF2F, with only minimal modifications. Please follow the repo to install the correct Lean 4 and other corresponding package version, especially LeanDojo.
 
-## 4. Evaluation Results
+After installing the corresponding environment, please substitute the MiniF2F by the <a href="https://github.com/haoyuzhao123/LeanIneqComp-Dojo">
+    <img
+      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+      alt="GitHub"
+      width="20"
+      style="vertical-align: middle; margin-right: 4px;"
+    />
+    LeanIneqComp-Dojo
+  </a>, which is the Github Repo of Ineq-Comp tracable by Leandojo and adapted to the Lean 4 version used by InternLM2.5-StepProver.
+
+
+## 4. Ineq-Comp Benchmark
+All the data of our Ineq-Comp benchmark, including the proofs of the seed problems, can be found in the `benchmark` folder, and is also available on [<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="20" style="vertical-align: text-bottom;"/> Huggingface](https://huggingface.co/datasets/zzzzzhy/Ineq-Comp).
+
+For Ineq-Simp, which contains Ineq-AMGM, Ineq-Cauchy, and Ineq-MISC, the questions can be found at `benchmark/amgm_*.jsonl`, `benchmark/cauchy_*.jsonl`, and `benchmark/misc_*.jsonl`.
+
+`benchmark/comp2_100.jsonl` contains 100 inequality problems generated using Ineq-Mix by randomly composing two seed problems from Ineq-Simp.
+
+`benchmark/real.jsonl` contains 50 real-world inequality problems.
+
+The proof for the 75 seed problems can be found in `benchmark/full_answer/` folder. We include the proof for two Lean 4 versions: 4.9, where our main experiments are based on (which is also the version used by DeepSeek-Prover-V1.5), and 4.18, which is the Lean 4 version (stable) used by the [interactive Lean 4 web](https://live.lean-lang.org/) at the time this benchmark is curated.
+
+## 5. Custom Problem Generation through Ineq-Mix
+
+Our Ineq-Mix framework that can generates more problems (given a pool of base problem) can be found in the `composition/` folder.
+
+`original_problems.jsonl` includes 65 seed problems that can be possibly composed or transformed. The composition rules, the variable-level algebraic transformation rules, and the problem-level algebraic transformation rules are defined in `composition/comp_op.py`, `composition/algebraic_op.py`, and `composition/algebraic_whole_op.py`, respectively. Please refer to `composition/mix.py` for more details.
+
+
+## 6. Evaluation Results
 
 ### General-Purpose Models
 | Method                                          | Budget | AM-GM Seed         | AM-GM I            | AM-GM II           | Cauchy Seed        | Cauchy I           | Cauchy II          | Misc Seed          | Misc I             | Misc II            |
@@ -103,7 +179,7 @@ parent_folder/
 
 
 
-## 5. Citation
+## 7. Citation
 
 If you find our work helps, please consider starring ⭐ us and citing:
 

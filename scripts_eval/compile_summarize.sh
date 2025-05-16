@@ -11,12 +11,10 @@
 
 echo "Executing on the machine:" $(hostname)
 
-source /scratch/gpfs/haoyu/miniconda3/etc/profile.d/conda.sh
-conda activate skillmixlean
+#source /path/to/your/conda/etc/profile.d/conda.sh
+#conda activate CONDA_ENV
 
-export LD_LIBRARY_PATH=/scratch/gpfs/haoyu/miniconda3/lib:$LD_LIBRARY_PATH
-
-export HF_HOME=/scratch/gpfs/haoyu/cache/
+#export LD_LIBRARY_PATH=/path/to/your/condalib:$LD_LIBRARY_PATH
 
 FIELD=complete
 

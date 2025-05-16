@@ -1,8 +1,6 @@
 import json
 import sys
 
-sys.path.append("/scratch/gpfs/haoyu/Deepseek")
-
 from prover.lean.verifier import Lean4ServerScheduler
 
 import argparse
