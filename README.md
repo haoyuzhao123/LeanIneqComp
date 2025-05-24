@@ -184,5 +184,10 @@ Our Ineq-Mix framework that can generates more problems (given a pool of base pr
 If you find our work helps, please consider starring ⭐ us and citing:
 
 ```{bibtex}
-
+@article{zhao2025ineq,
+  title={Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities},
+  author={Zhao, Haoyu and Geng, Yihan and Tang, Shange and Lin, Yong and Lyu, Bohan and Lin, Hongzhou and Jin, Chi and Arora, Sanjeev},
+  journal={arXiv preprint arXiv:2505.12680},
+  year={2025}
+}
 ```
